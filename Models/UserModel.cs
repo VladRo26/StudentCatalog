@@ -1,25 +1,37 @@
 ﻿using StudentCatalog.Logic;
+using System.ComponentModel.DataAnnotations;
+using System.Text.RegularExpressions;
 
-namespace StudentCatalog.Models;
-
-public class UserModel
+namespace StudentCatalog.Models
 {
-    public int Id_User { get; set; }
+    public class UserModel
+    {
+        public int UserModelId { get; set; }
 
-    public string FirstName { get; set; }
+        [Required(ErrorMessage = "First name is required")]
+        public string FirstName { get; set; }
 
-    public string LastName { get; set; }
+        [Required(ErrorMessage = "Last name is required")]
+        public string LastName { get; set; }
 
-    public string Email { get; set; }
+        [EmailAddress(ErrorMessage = "Invalid Email Address")]
+        public string Email { get; set; }
 
-    public string Password { get; set; }
+        [Required(ErrorMessage = "Username is required")]
+        public string Username { get; set; }
 
-    public string PasswordConfirm { get; set; }
+        [Required(ErrorMessage = "Password is required")]
+        [DataType(DataType.Password)]
+        public string Password { get; set; }
 
-    public string Phone { get; set; }
+        [Compare("Password", ErrorMessage = "The password and confirmation password do not match")]
+        [DataType(DataType.Password)]
+        public string PasswordConfirm { get; set; }
 
-    public UserType Role { get; set; }
+        [RegularExpression(@"^07[0-9]{8}$", ErrorMessage = "Phone number must start with 07 and be 10 digits long")]
+        public string Phone { get; set; }
 
-
-
+        [Required(ErrorMessage = "Role is required")]
+        public UserType Role { get; set; }
+    }
 }

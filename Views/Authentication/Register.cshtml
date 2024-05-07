@@ -1,0 +1,63 @@
+﻿@model StudentCatalog.Models.UserModel
+
+<div class="container">
+    <h1 class="text-center">Register</h1>
+    <div class="row">
+        <div class="mx-auto w-50">
+            <!-- Ensure the form posts to the Register action in the Authentication controller -->
+            <form asp-controller="Authentication" asp-action="Register" method="post">
+                <div class="form-group">
+                    <label asp-for="FirstName" class="control-label">First Name</label>
+                    <input asp-for="FirstName" class="form-control bg-light" />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="LastName" class="control-label">Last Name</label>
+                    <input asp-for="LastName" class="form-control bg-light" />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Email" class="control-label">Email</label>
+                    <input asp-for="Email" class="form-control bg-light" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Username" class="control-label">Username</label>
+                    <input asp-for="Username" class="form-control bg-light" />
+                    <span asp-validation-for="Username" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Password" class="control-label">Password</label>
+                    <input asp-for="Password" class="form-control bg-light" type="password" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PasswordConfirm" class="control-label">Confirm Password</label>
+                    <input asp-for="PasswordConfirm" class="form-control bg-light" type="password" />
+                    <span asp-validation-for="PasswordConfirm" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Phone" class="control-label">Phone</label>
+                    <input asp-for="Phone" class="form-control bg-light" />
+                    <span asp-validation-for="Phone" class="text-danger"></span>
+                </div>
+                @if (!ViewData.ModelState.IsValid)
+                {
+                    if (ViewData.ModelState[String.Empty] != null)
+                    {
+                        <div class="error-summary">
+                            @foreach (var error in ViewData.ModelState[String.Empty].Errors)
+                            {
+                                <div class="error-item text-danger">
+                                    @error.ErrorMessage
+                                </div>
+                            }
+                        </div>
+                    }
+                }
+                <br /> 
+                <button type="submit" class="btn btn-primary mt-3">Register</button>
+            </form>
+        </div>
+    </div>
+</div>

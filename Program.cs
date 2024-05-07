@@ -1,3 +1,6 @@
+﻿using StudentCatalog.ContextModels;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace StudentCatalog
 {
@@ -9,9 +12,18 @@ namespace StudentCatalog
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-        
+            builder.Services.AddDbContext<DataContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("ProjectDatabase")));
+            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
+                {
+                    options.LoginPath = "/Authentication/Login";
+                    options.AccessDeniedPath = "/Authentication/Forbidden"; // to be added as a view and controller action
+                });
+
 
             var app = builder.Build();
+
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
