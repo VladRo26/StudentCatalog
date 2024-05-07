@@ -4,7 +4,7 @@ namespace StudentCatalog.Models;
 
 public class UserModel
 {
-    public int Id { get; set; }
+    public int Id_User { get; set; }
 
     public string FirstName { get; set; }
 
