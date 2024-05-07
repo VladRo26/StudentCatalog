@@ -21,6 +21,7 @@ namespace StudentCatalog
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            //turit jmek
 
             app.UseRouting();
 
