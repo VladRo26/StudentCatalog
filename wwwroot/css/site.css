@@ -20,3 +20,8 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.login-buttons > ul > li {
+    margin-left:10px;
+    margin-right:10px;
+}
