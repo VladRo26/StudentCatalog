@@ -7,6 +7,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq.Expressions;
 using System.Security.Claims;
 using System.Text.RegularExpressions;
+using Microsoft.IdentityModel.Tokens;
 
 namespace StudentCatalog.Controllers;
 public class AuthenticationController : Controller
@@ -66,15 +67,12 @@ public class AuthenticationController : Controller
     [HttpPost]
     public async Task<IActionResult> Login(UserModel model)
     {
-        if (ModelState.IsValid)
-        {
+       
             try
             {
-                if (String.IsNullOrWhiteSpace(model.Username))
-                    ModelState.AddModelError(String.Empty, "The username is empty!");
-                else if (String.IsNullOrWhiteSpace(model.Password))
-                    ModelState.AddModelError(String.Empty, "The password is empty!");
-                else if (context.Useri.Where(user => user.Username.ToLower() == model.Username.ToLower() && user.Password == model.Password).Count() > 0)
+                if(!model.Username.IsNullOrEmpty() && !model.Password.IsNullOrEmpty())
+                {
+                    if (context.Useri.Where(user => user.Username.ToLower() == model.Username.ToLower() && user.Password == model.Password).Count() > 0)
                 {
                     List<Claim> claims = new List<Claim>
                 {
@@ -85,15 +83,18 @@ public class AuthenticationController : Controller
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimIdentity));
                     return RedirectToAction("Index", "Home");
                 }
-                else
-                    ModelState.AddModelError(String.Empty, "Invalid username or password!");
-            }
-            catch (Exception ex)
-            {
+                    else
+                        ModelState.AddModelError(String.Empty, "Invalid username or password!");
+                }
+                
+            
+                  
+            }catch (Exception ex)
+            {               
                 ModelState.AddModelError(String.Empty, "Error logging in: " + ex.Message);
             }
-        }
         return View(model);
+      
     }
 
     [HttpGet]

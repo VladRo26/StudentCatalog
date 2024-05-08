@@ -5,10 +5,7 @@ namespace StudentCatalog.ContextModels;
 
 public class DataContext : DbContext
 {
-    public DataContext(DbContextOptions<DataContext> options) : base(options)
-    {
-
-    }
+    public DataContext(DbContextOptions<DataContext> options) : base(options){}
 
     public DbSet<UserModel> Useri {  get; set; }
 }
