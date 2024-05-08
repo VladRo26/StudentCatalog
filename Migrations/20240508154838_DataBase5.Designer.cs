@@ -11,8 +11,8 @@ using StudentCatalog.ContextModels;
 namespace StudentCatalog.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240508115735_MigrareTuris")]
-    partial class MigrareTuris
+    [Migration("20240508154838_DataBase5")]
+    partial class DataBase5
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,6 +23,33 @@ namespace StudentCatalog.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("StudentCatalog.Models.StudentModel", b =>
+                {
+                    b.Property<int>("StudentModelId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StudentModelId"));
+
+                    b.Property<int>("GroupId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsEnrolled")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("YearOfStudy")
+                        .HasColumnType("int");
+
+                    b.HasKey("StudentModelId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Students");
+                });
 
             modelBuilder.Entity("StudentCatalog.Models.UserModel", b =>
                 {
@@ -66,6 +93,17 @@ namespace StudentCatalog.Migrations
                     b.HasKey("UserModelId");
 
                     b.ToTable("Useri");
+                });
+
+            modelBuilder.Entity("StudentCatalog.Models.StudentModel", b =>
+                {
+                    b.HasOne("StudentCatalog.Models.UserModel", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

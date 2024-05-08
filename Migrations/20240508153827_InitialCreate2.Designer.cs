@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StudentCatalog.ContextModels;
 
@@ -10,9 +11,11 @@ using StudentCatalog.ContextModels;
 namespace StudentCatalog.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240508153827_InitialCreate2")]
+    partial class InitialCreate2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,7 +38,7 @@ namespace StudentCatalog.Migrations
                     b.Property<bool>("IsEnrolled")
                         .HasColumnType("bit");
 
-                    b.Property<int>("UserId")
+                    b.Property<int>("UserModelId")
                         .HasColumnType("int");
 
                     b.Property<int>("YearOfStudy")
@@ -43,7 +46,7 @@ namespace StudentCatalog.Migrations
 
                     b.HasKey("StudentModelId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserModelId");
 
                     b.ToTable("Students");
                 });
@@ -94,13 +97,13 @@ namespace StudentCatalog.Migrations
 
             modelBuilder.Entity("StudentCatalog.Models.StudentModel", b =>
                 {
-                    b.HasOne("StudentCatalog.Models.UserModel", "User")
+                    b.HasOne("StudentCatalog.Models.UserModel", "UserModel")
                         .WithMany()
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("UserModelId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("User");
+                    b.Navigation("UserModel");
                 });
 #pragma warning restore 612, 618
         }
