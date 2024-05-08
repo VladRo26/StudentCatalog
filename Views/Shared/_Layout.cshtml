@@ -1,7 +1,5 @@
 ﻿@using  StudentCatalog.Logic
-@{
-   
-}
+@model StudentCatalog.Models.UserModel;
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,13 +27,11 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
-                        <!-- @if (user?.identity?.isauthenticated == true && user.isinrole()
-                         {
-                            
-                         }--></
+
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="EnrolledCourses" asp-action="StudentCourses">Situatie Scolara</a>
                         </li>
+ 
                     </ul>
                     <div class="login-buttons">
                         <ul class="navbar-nav flex-grow-1">

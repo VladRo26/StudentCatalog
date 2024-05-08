@@ -11,8 +11,6 @@ namespace StudentCatalog.Models
         public UserModel Sender { get; set; }
         public int ReceiverId {  get; set; }
         public UserModel Receiver { get; set; }
-       
-
         public string Message {  get; set; }
         public DateTime TimeStamp { get; set; }
     }

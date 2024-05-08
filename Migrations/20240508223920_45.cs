@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace StudentCatalog.Migrations
 {
     /// <inheritdoc />
-    public partial class _3 : Migration
+    public partial class _45 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -48,7 +48,7 @@ namespace StudentCatalog.Migrations
                 name: "Cursuri",
                 columns: table => new
                 {
-                    CourseModelId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TeacherId = table.Column<int>(type: "int", nullable: false),
@@ -56,7 +56,7 @@ namespace StudentCatalog.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Cursuri", x => x.CourseModelId);
+                    table.PrimaryKey("PK_Cursuri", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Cursuri_Useri_TeacherId",
                         column: x => x.TeacherId,
@@ -106,6 +106,12 @@ namespace StudentCatalog.Migrations
                 {
                     table.PrimaryKey("PK_Studenti", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_Studenti_Grupe_GroupId",
+                        column: x => x.GroupId,
+                        principalTable: "Grupe",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_Studenti_Useri_UserId",
                         column: x => x.UserId,
                         principalTable: "Useri",
@@ -130,7 +136,7 @@ namespace StudentCatalog.Migrations
                         name: "FK_CursuriStudenti_Cursuri_CourseId",
                         column: x => x.CourseId,
                         principalTable: "Cursuri",
-                        principalColumn: "CourseModelId");
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_CursuriStudenti_Studenti_StudentId",
                         column: x => x.StudentId,
@@ -165,6 +171,11 @@ namespace StudentCatalog.Migrations
                 column: "SenderId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Studenti_GroupId",
+                table: "Studenti",
+                column: "GroupId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Studenti_UserId",
                 table: "Studenti",
                 column: "UserId");
@@ -177,9 +188,6 @@ namespace StudentCatalog.Migrations
                 name: "CursuriStudenti");
 
             migrationBuilder.DropTable(
-                name: "Grupe");
-
-            migrationBuilder.DropTable(
                 name: "Mesaje");
 
             migrationBuilder.DropTable(
@@ -187,6 +195,9 @@ namespace StudentCatalog.Migrations
 
             migrationBuilder.DropTable(
                 name: "Studenti");
+
+            migrationBuilder.DropTable(
+                name: "Grupe");
 
             migrationBuilder.DropTable(
                 name: "Useri");

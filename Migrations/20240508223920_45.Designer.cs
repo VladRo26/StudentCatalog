@@ -12,8 +12,8 @@ using StudentCatalog.ContextModels;
 namespace StudentCatalog.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240508181447_3")]
-    partial class _3
+    [Migration("20240508223920_45")]
+    partial class _45
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,11 +27,11 @@ namespace StudentCatalog.Migrations
 
             modelBuilder.Entity("StudentCatalog.Models.CourseModel", b =>
                 {
-                    b.Property<int>("CourseModelId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CourseModelId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -43,7 +43,7 @@ namespace StudentCatalog.Migrations
                     b.Property<int>("YearCourse")
                         .HasColumnType("int");
 
-                    b.HasKey("CourseModelId");
+                    b.HasKey("Id");
 
                     b.HasIndex("TeacherId");
 
@@ -144,6 +144,8 @@ namespace StudentCatalog.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("GroupId");
+
                     b.HasIndex("UserId");
 
                     b.ToTable("Studenti");
@@ -241,11 +243,19 @@ namespace StudentCatalog.Migrations
 
             modelBuilder.Entity("StudentCatalog.Models.StudentModel", b =>
                 {
+                    b.HasOne("StudentCatalog.Models.GroupModel", "Group")
+                        .WithMany()
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("StudentCatalog.Models.UserModel", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Group");
 
                     b.Navigation("User");
                 });

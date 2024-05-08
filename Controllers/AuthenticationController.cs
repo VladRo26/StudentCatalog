@@ -75,10 +75,11 @@ public class AuthenticationController : Controller
                 {
                     if (context.Useri.Where(user => user.Username.ToLower() == model.Username.ToLower() && user.Password == model.Password).Count() > 0)
                     {
-                        List<Claim> claims = new List<Claim>
+                    List<Claim> claims = new List<Claim>
                         {
                             new Claim(ClaimTypes.Name, model.Username),
-                            new Claim("Role", model.Role.ToString())
+                            new Claim("Role", model.Role.ToString()),
+                            new Claim(ClaimTypes.NameIdentifier,model.Id.ToString())
                         };
                         var claimIdentity = new ClaimsIdentity(claims, "AuthenticationCookie");
                         await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimIdentity));
@@ -106,10 +107,12 @@ public class AuthenticationController : Controller
     [HttpGet]
     public async Task<IActionResult> Logout()
     {
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
         if (User.Identity.IsAuthenticated == false)
         {
             return RedirectToAction("Index", "Home");
         }
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
         await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
         return RedirectToAction("Login");
     }

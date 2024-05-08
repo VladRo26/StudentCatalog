@@ -1,0 +1,17 @@
+﻿@model List<StudentCoursesModel>
+@{
+    List<StudentCoursesModel> cursuriStudenti = Model;
+}
+
+
+<div class="text-center">
+    <h1 class="display-4">Situatie Scolara</h1>
+    @{
+       // List<CourseModel>courseName=
+        foreach(StudentCoursesModel courseStudent in cursuriStudenti)
+        {
+            <p>@courseStudent.Course.Name</p>
+        }
+     }
+    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
