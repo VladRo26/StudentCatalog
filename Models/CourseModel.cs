@@ -1,11 +1,14 @@
-﻿namespace StudentCatalog.Models
+﻿using System.ComponentModel.DataAnnotations;
+using System.Text.RegularExpressions;
+
+
+namespace StudentCatalog.Models;
+
+public class CourseModel
 {
-    public class CourseModel
-    {
-        public int Id_Course { get; set; }
+    public int CourseModelId { get; set; }
 
-        public string Name { get; set; }
+    public int TeacherId { get; set; }
 
-        public int Id_teacher {  get; set; }
-    }
+    public UserModel Teacher { get; set; }
 }
