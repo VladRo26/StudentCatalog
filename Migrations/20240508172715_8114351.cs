@@ -5,7 +5,7 @@
 namespace StudentCatalog.Migrations
 {
     /// <inheritdoc />
-    public partial class DataBase468 : Migration
+    public partial class _8114351 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

@@ -6,7 +6,7 @@ namespace StudentCatalog.Models
 {
     public class UserModel
     {
-        public int UserModelId { get; set; }
+        public int Id { get; set; }
 
         [Required(ErrorMessage = "First name is required")]
         public string FirstName { get; set; }
@@ -33,5 +33,7 @@ namespace StudentCatalog.Models
 
         [Required(ErrorMessage = "Role is required")]
         public UserType Role { get; set; }
+
+     
     }
 }

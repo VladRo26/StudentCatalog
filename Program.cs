@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
+
 namespace StudentCatalog
 {
     public class Program
@@ -15,6 +16,8 @@ namespace StudentCatalog
 
             // Adăugăm suport pentru controlere cu vizualizări (MVC).
             builder.Services.AddControllersWithViews();
+
+
 
             // Adăugăm și configurăm contextul de date, folosind SQL Server cu o conexiune specificată în fișierul de configurare.
             builder.Services.AddDbContext<DataContext>(options =>
@@ -31,6 +34,7 @@ namespace StudentCatalog
                     options.AccessDeniedPath = "/Authentication/Forbidden"; // De adăugat ca acțiune în controler și view
                 });
 
+           
             // Construim aplicația finală folosind configurația specificată în `builder`.
             var app = builder.Build();
 

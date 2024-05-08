@@ -5,7 +5,7 @@ namespace StudentCatalog.Models;
 
 public class GroupModel
 {
-    public int GroupModelId { get; set; }
+    public int Id { get; set; }
 
     public int GroupNumber { get; set; }
 
