@@ -11,8 +11,8 @@ using StudentCatalog.ContextModels;
 namespace StudentCatalog.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240508101901_DataBae")]
-    partial class DataBae
+    [Migration("20240508115735_MigrareTuris")]
+    partial class MigrareTuris
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

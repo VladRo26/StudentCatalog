@@ -63,7 +63,7 @@ namespace StudentCatalog
             // Dacă nu se specifică un controler și o acțiune în cerere, aceasta va fi redirecționată către `AuthenticationController` și acțiunea `Login`.
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Authentication}/{action=Login}/{id?}");
+                pattern: "{controller=Home}/{action=Index}/{id?}");
 
             // Pornim aplicația web și începem să ascultăm cereri.
             app.Run();
