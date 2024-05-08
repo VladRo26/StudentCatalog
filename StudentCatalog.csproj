@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="DBExports\" />
     <Folder Include="Migrations\" />
   </ItemGroup>
 
