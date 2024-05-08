@@ -26,23 +26,31 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                     </ul>
-                    <ul>
-                        @if (User?.Identity?.IsAuthenticated == true)
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Authentication" asp-action="Logout">Logout</a>
-                            </li>
-                        }
-                        else
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Authentication" asp-action="Login">Login</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Authentication" asp-action="Register">Register</a>
-                            </li>
-                        }
-                    </ul>
+                    <div class="login-buttons">
+                        <ul class="navbar-nav flex-grow-1">
+                            @if (User?.Identity?.IsAuthenticated == true)
+                            {
+                                <li class="nav-item">
+                                    <form asp-controller="Authentication" asp-action="Logout" method="get" class="d-inline">
+                                        <button type="submit" class="btn btn-danger">Logout</button>
+                                    </form>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="nav-item">
+                                    <form asp-controller="Authentication" asp-action="Login" method="get" class="d-inline">
+                                        <button type="submit" class="btn btn-primary">Login</button>
+                                    </form>
+                                </li>
+                                <li class="nav-item">
+                                    <form asp-controller="Authentication" asp-action="Register" method="get" class="d-inline">
+                                        <button type="submit" class="btn btn-secondary">Register</button>
+                                    </form>
+                                </li>
+                            }
+                        </ul>
+                    </div>
                 </div>
             </div>
         </nav>
