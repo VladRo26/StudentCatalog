@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace StudentCatalog.Migrations
 {
     /// <inheritdoc />
-    public partial class _81123 : Migration
+    public partial class _3 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -48,14 +48,15 @@ namespace StudentCatalog.Migrations
                 name: "Cursuri",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    CourseModelId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TeacherId = table.Column<int>(type: "int", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    YearCourse = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Cursuri", x => x.Id);
+                    table.PrimaryKey("PK_Cursuri", x => x.CourseModelId);
                     table.ForeignKey(
                         name: "FK_Cursuri_Useri_TeacherId",
                         column: x => x.TeacherId,
@@ -129,7 +130,7 @@ namespace StudentCatalog.Migrations
                         name: "FK_CursuriStudenti_Cursuri_CourseId",
                         column: x => x.CourseId,
                         principalTable: "Cursuri",
-                        principalColumn: "Id");
+                        principalColumn: "CourseModelId");
                     table.ForeignKey(
                         name: "FK_CursuriStudenti_Studenti_StudentId",
                         column: x => x.StudentId,

@@ -76,10 +76,10 @@ public class AuthenticationController : Controller
                     if (context.Useri.Where(user => user.Username.ToLower() == model.Username.ToLower() && user.Password == model.Password).Count() > 0)
                     {
                         List<Claim> claims = new List<Claim>
-                {
-                        new Claim(ClaimTypes.Name, model.Username),
-                        new Claim("Role", model.Role.ToString())
-                };
+                        {
+                            new Claim(ClaimTypes.Name, model.Username),
+                            new Claim("Role", model.Role.ToString())
+                        };
                         var claimIdentity = new ClaimsIdentity(claims, "AuthenticationCookie");
                         await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimIdentity));
                         return RedirectToAction("Index", "Home");

@@ -12,8 +12,8 @@ using StudentCatalog.ContextModels;
 namespace StudentCatalog.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240508172715_8114351")]
-    partial class _8114351
+    [Migration("20240508181447_3")]
+    partial class _3
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,11 +27,11 @@ namespace StudentCatalog.Migrations
 
             modelBuilder.Entity("StudentCatalog.Models.CourseModel", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("CourseModelId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CourseModelId"));
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -40,7 +40,10 @@ namespace StudentCatalog.Migrations
                     b.Property<int>("TeacherId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.Property<int>("YearCourse")
+                        .HasColumnType("int");
+
+                    b.HasKey("CourseModelId");
 
                     b.HasIndex("TeacherId");
 
