@@ -1,17 +1,132 @@
 ﻿@model List<StudentCoursesModel>
 @{
-    List<StudentCoursesModel> cursuriStudenti = Model;
+    List<StudentCoursesModel> cursuri = Model;
+    ViewData["Title"] = "Situatie Scolara";
 }
 
 
-<div class="text-center">
+<div class="text-center" id="MainStudentCourses">
     <h1 class="display-4">Situatie Scolara</h1>
-    @{
-       // List<CourseModel>courseName=
-        foreach(StudentCoursesModel courseStudent in cursuriStudenti)
-        {
-            <p>@courseStudent.Course.Name</p>
-        }
-     }
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+    <div style="display:flex" class="filterStudentCourses">
+        <select id="yearSelect" class="form-control" onchange="filterCourses()">
+            <option value="">Selecteaza anul cursului</option>
+            @{
+                int maxYear = ViewData["StudentYear"] is int value ? value : 0;
+                for (int year = 1; year <= maxYear; year++)
+                {
+                            <option value="@year">@year</option>
+                }
+            }
+        </select>
+
+        <select id="sortSelect" class="form-control" onchange="sortCourses()">
+            <option value="">Selecteaza ordinea afisarii cursurilor</option>
+            <option value="1">Alfabetic : Crescator</option>
+            <option value="2">Alfabetic : Descrescator</option>
+            <option value="3">Dupa Note : Crescator</option>
+            <option value="4">Dupa Note : Descrescator</option>
+            
+
+        </select>
+    </div>
+    <!-- Dropdown for selecting year -->
+    
+    <h3 class="display-5" id="finalGrade"></h3>
+    <table class="table table-striped" id="coursesTable">
+        <thead>
+            <tr>
+                <th>Course Name</th>
+                <th>Grade</th>
+                <th>Course Year</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            @foreach (StudentCatalog.Models.StudentCoursesModel courseStudent in Model)
+            {
+                <tr class="course-row" data-year="@courseStudent.Course.YearCourse" data-grade="@courseStudent.Grade" data-name="@courseStudent.Course.Name">
+                    <td>@courseStudent.Course.Name</td>
+                    <td>@courseStudent.Grade</td>
+                    <td>@courseStudent.Course.YearCourse</td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
+
+<footer style="margin-bottom:0">
+    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</footer>
+
+<script>
+
+    function sortCourses() {
+        var selectedOption = document.getElementById("sortSelect").value;
+        var rows = Array.from(document.querySelectorAll(".course-row"));
+        var coursesTableBody = document.getElementById("coursesTable").querySelector("tbody");
+
+        if (selectedOption === "1") {
+            // Sort rows alphabetically by course name
+            rows.sort((a, b) => {
+                var nameA = a.dataset.name.toLowerCase();
+                var nameB = b.dataset.name.toLowerCase();
+                return nameA.localeCompare(nameB);
+            });
+        } else if (selectedOption === "2") {
+            // Sort rows alphabetically by course name
+            rows.sort((a, b) => {
+                var nameA = a.dataset.name.toLowerCase();
+                var nameB = b.dataset.name.toLowerCase();
+                return nameB.localeCompare(nameA);
+            });
+        }else if (selectedOption === "3") {
+            // Sort rows by grade (numerically, descending)
+            rows.sort((a, b) => {
+                var gradeA = parseFloat(a.dataset.grade);
+                var gradeB = parseFloat(b.dataset.grade);
+                return gradeB - gradeA;
+            });
+        } else if (selectedOption === "4") {
+            // Sort rows by grade (numerically, descending)
+            rows.sort((a, b) => {
+                var gradeA = parseFloat(a.dataset.grade);
+                var gradeB = parseFloat(b.dataset.grade);
+                return !gradeB - gradeA;
+            });
+        }
+
+        // Clear the current table body and append the sorted rows
+        coursesTableBody.innerHTML = "";
+        rows.forEach(row => coursesTableBody.appendChild(row));
+    }
+ 
+    function filterCourses() {
+
+        var selectedYear = document.getElementById("yearSelect").value;
+        var rows = document.querySelectorAll(".course-row");
+
+        var count = 0;
+        var grades = 0;
+
+        rows.forEach(row => {
+            if (row.dataset.year === selectedYear || selectedYear === "") {
+                row.style.display = "";
+                count++;
+                grades += parseFloat(row.dataset.grade);
+            } else {
+                row.style.display = "none";
+            }
+
+        });
+        var gradeLabel = document.getElementById("finalGrade");
+        if (selectedYear != 0 && count > 0) {
+            gradeLabel.style.display = "";
+            gradeLabel.textContent = "Media Anuala : " + (grades / count);
+        } else {
+            gradeLabel.style.display = "none";
+        }
+    }
+
+   
+</script>

@@ -56,6 +56,7 @@ namespace StudentCatalog.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("GroupNumber")
+                        .HasMaxLength(3)
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -91,6 +92,43 @@ namespace StudentCatalog.Migrations
                     b.HasIndex("SenderId");
 
                     b.ToTable("Mesaje");
+                });
+
+            modelBuilder.Entity("StudentCatalog.Models.StudentCertificateModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Reason")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("StudentId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("Adeverinte");
                 });
 
             modelBuilder.Entity("StudentCatalog.Models.StudentCoursesModel", b =>
@@ -218,6 +256,17 @@ namespace StudentCatalog.Migrations
                     b.Navigation("Receiver");
 
                     b.Navigation("Sender");
+                });
+
+            modelBuilder.Entity("StudentCatalog.Models.StudentCertificateModel", b =>
+                {
+                    b.HasOne("StudentCatalog.Models.StudentModel", "Student")
+                        .WithMany()
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Student");
                 });
 
             modelBuilder.Entity("StudentCatalog.Models.StudentCoursesModel", b =>

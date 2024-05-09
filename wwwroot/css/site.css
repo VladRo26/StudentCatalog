@@ -25,3 +25,34 @@ body {
     margin-left:10px;
     margin-right:10px;
 }
+
+#MainStudentCourses > *{
+    margin-top:20px;
+}
+
+footer {
+    width: 100%;
+    text-align: center;
+    padding: 10px 0;
+}
+
+.filterStudentCourses>select{
+    margin:0 0 10px 10px;
+}
+
+#CertificateForm > div {
+    /* This centers the button horizontally */
+    margin-bottom: 20px; /* Ensures vertical centering of items in the flex container */
+    margin-left: 40%;
+}
+
+    #CertificateForm > div > input,
+    #CertificateForm > div > select {
+        width:50%; /* Adjust if necessary to fit your design */
+        
+    }
+
+
+    
+
+   

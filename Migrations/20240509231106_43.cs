@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace StudentCatalog.Migrations
 {
     /// <inheritdoc />
-    public partial class _45 : Migration
+    public partial class _43 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -17,7 +17,7 @@ namespace StudentCatalog.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    GroupNumber = table.Column<int>(type: "int", nullable: false)
+                    GroupNumber = table.Column<int>(type: "int", maxLength: 3, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -120,6 +120,30 @@ namespace StudentCatalog.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Adeverinte",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Reason = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    StudentId = table.Column<int>(type: "int", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Adeverinte", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Adeverinte_Studenti_StudentId",
+                        column: x => x.StudentId,
+                        principalTable: "Studenti",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "CursuriStudenti",
                 columns: table => new
                 {
@@ -144,6 +168,11 @@ namespace StudentCatalog.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Adeverinte_StudentId",
+                table: "Adeverinte",
+                column: "StudentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Cursuri_TeacherId",
@@ -184,6 +213,9 @@ namespace StudentCatalog.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Adeverinte");
+
             migrationBuilder.DropTable(
                 name: "CursuriStudenti");
 

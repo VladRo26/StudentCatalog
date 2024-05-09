@@ -1,0 +1,77 @@
+﻿@{
+    ViewData["Title"] = "Adeverinta";
+}
+@model StudentCatalog.Models.StudentCertificateModel
+
+<div class="text-center">
+    <h1 class="display-4">Adeverinta</h1>
+    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+<body>
+    <form asp-controller="Certificate" asp-action="GenerateCertificate" method="post" id="CertificateForm">
+        <div class="form-group">
+            <label for="FirstName">First Name:</label>
+            <input type="text" asp-for="FirstName" id="FirstName" class="form-control" />
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="LastName">Last Name:</label>
+            <input type="text" asp-for="LastName" id="LastName" class="form-control" />
+            <span asp-validation-for="LastName" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="PhoneNumber">Phone Number:</label>
+            <input type="text" asp-for="PhoneNumber" id="PhoneNumber" class="form-control" />
+            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="Reason">Reason:</label>
+            <select asp-for="Reason" id="selectorReason" class="form-control">
+                <option style="text-align:center" value="" >Selecteaza</option>
+                <option style="text-align:center" value="1">Angajare</option>
+                <option style="text-align:center" value="2" >Medical</option>
+                <option style="text-align:center" value="3">Bursa</option>
+                <option style="text-align:center" value="4">Alt Motiv</option>
+            </select>
+            <span asp-validation-for="Reason" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="Group">Group:</label>
+            <input type="text" asp-for="Student.Group.GroupNumber" id="Group" class="form-control" />
+            <span asp-validation-for="Student.Group.GroupNumber" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="YearOfStudy">Year Of Study:</label>
+            <input type="text" asp-for="Student.YearOfStudy" id="YearOfStudy" class="form-control" />
+            <span asp-validation-for="Student.YearOfStudy" class="text-danger"></span>
+        </div>
+        @if (!ViewData.ModelState.IsValid)
+        {
+            if (ViewData.ModelState[String.Empty] != null)
+            {
+                <div class="error-summary">
+                    @foreach (var error in ViewData.ModelState[String.Empty].Errors)
+                    {
+                        <div class="error-item text-danger">
+                            @error.ErrorMessage
+                        </div>
+                    }
+                </div>
+            }
+        }
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary" id="certificateBtn">Submit</button>
+        </div>
+    </form>
+
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.5.1.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.2/jquery.validate.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/mvc/5.2.3/jquery.validate.unobtrusive.min.js"></script>
+</body>

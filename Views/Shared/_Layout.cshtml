@@ -1,5 +1,7 @@
 ﻿@using  StudentCatalog.Logic
-@model StudentCatalog.Models.UserModel;
+@{
+    string userRole = User?.Claims.FirstOrDefault(claim => claim.Type == "Role")?.Value ?? "";
+}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,10 +29,16 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="EnrolledCourses" asp-action="StudentCourses">Situatie Scolara</a>
-                        </li>
+                        @if (userRole.ToString() == UserType.Student.ToString())
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="EnrolledCourses" asp-action="StudentCourses">Situatie Scolara</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Certificate" asp-action="GenerateCertificate">Adeverinte</a>
+                            </li>
+                        }
+                        
  
                     </ul>
                     <div class="login-buttons">
