@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace StudentCatalog.Migrations
 {
     /// <inheritdoc />
-    public partial class _81123 : Migration
+    public partial class migrare2 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -50,8 +50,8 @@ namespace StudentCatalog.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TeacherId = table.Column<int>(type: "int", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TeacherId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -60,8 +60,7 @@ namespace StudentCatalog.Migrations
                         name: "FK_Cursuri_Useri_TeacherId",
                         column: x => x.TeacherId,
                         principalTable: "Useri",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -119,7 +118,7 @@ namespace StudentCatalog.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     StudentId = table.Column<int>(type: "int", nullable: false),
-                    CourseId = table.Column<int>(type: "int", nullable: false),
+                    CourseId = table.Column<int>(type: "int", nullable: true),
                     Grade = table.Column<float>(type: "real", nullable: false)
                 },
                 constraints: table =>
@@ -129,7 +128,8 @@ namespace StudentCatalog.Migrations
                         name: "FK_CursuriStudenti_Cursuri_CourseId",
                         column: x => x.CourseId,
                         principalTable: "Cursuri",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_CursuriStudenti_Studenti_StudentId",
                         column: x => x.StudentId,

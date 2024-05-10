@@ -1,0 +1,21 @@
+﻿@model CourseModel
+
+@{
+    CourseModel course = Model;
+    ViewData["Title"] = course.Name;
+
+}
+
+<h1>Name: @course.Name</h1>
+
+
+@if (course.Teacher == null)
+{
+    <h2>Teacher: No Teacher</h2>
+}
+else
+{
+    <h2>Teacher: @course.Teacher.LastName @course.Teacher.FirstName</h2>
+}
+
+<a asp-action="Index">Back to all courses</a>

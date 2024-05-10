@@ -33,7 +33,13 @@ public class DataContext : DbContext
            .HasOne(m => m.Course)
            .WithMany() // Optionally add navigation property for a collection of received messages in UserModel
            .HasForeignKey(m => m.CourseId)
-           .OnDelete(DeleteBehavior.ClientSetNull);
+           .OnDelete(DeleteBehavior.Restrict)
+           .IsRequired(false);
+
+        modelBuilder.Entity<StudentCoursesModel>()
+              .Property(sc => sc.CourseId)
+               .IsRequired(false);
+
 
         modelBuilder.Entity<MessagesModel>()
            .HasOne(m => m.Receiver)
@@ -41,9 +47,10 @@ public class DataContext : DbContext
            .HasForeignKey(m => m.ReceiverId)
            .OnDelete(DeleteBehavior.ClientSetNull);
 
+        modelBuilder.Entity<CourseModel>()
+            .Property(c => c.TeacherId)
+            .IsRequired(false);
     }
-
-
 
 
 }

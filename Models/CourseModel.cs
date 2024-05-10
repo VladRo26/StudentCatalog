@@ -6,10 +6,10 @@ namespace StudentCatalog.Models;
 
 public class CourseModel
 {
-    public int CourseModelId { get; set; }
+    public int Id { get; set; }
     public string Name {  get; set; }
 
-    public int TeacherId { get; set; }
+    public int? TeacherId { get; set; }
 
-    public UserModel Teacher { get; set; }
+    public UserModel? Teacher { get; set; }
 }

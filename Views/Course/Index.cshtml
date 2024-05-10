@@ -1,0 +1,82 @@
+﻿@model List<CourseModel>
+
+@{
+    ViewData["Title"] = "Courses";
+}
+
+<h1>Courses</h1>
+
+<form asp-controller="Search" asp-action="SearchPortal" method="get" class="form-inline">
+    <input type="text" class="form-control mb-2 mr-sm-2" name="CourseName" placeholder="Course Name..." value="@ViewBag.CourseName"/>
+    <input type="text" class="form-control mb-2 mr-sm-2" name="TeacherName" placeholder="Teacher Name.." value="@ViewBag.TeacherName"/>
+    <button type="submit" class="btn btn-primary mb-2">Search</button>
+</form>
+
+
+<table class="table" id="coursesTable">
+    <thead>
+        <tr>
+            <th>Course Name</th>
+            <th>Teacher Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (CourseModel course in Model)
+        {
+            <tr data-course-id="@course.Id">
+                <td>@course.Name</td>
+                <td>@(course.Teacher != null ? course.Teacher.LastName : "No Teacher")</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div>
+    <button id="addBtn" class="btn btn-success" onclick="location.href='@Url.Action("AddCourse", "Course")'">Add Course</button>
+    <button id="modifyBtn" disabled="disabled" class="btn btn-primary">Modify</button>
+    <button id="deleteBtn" disabled="disabled" class="btn btn-danger">Delete</button>
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var selectedCourseId = null;
+
+            // Handle row click
+            $("#coursesTable tr").click(function (event) {
+                 event.stopPropagation(); // Stop the event from propagating to the document
+                selectedCourseId = $(this).data("course-id"); // Store course ID
+                $(this).addClass('table-primary').siblings().removeClass('table-primary'); // Highlight the selected row
+
+                // Enable buttons
+                $("#modifyBtn").attr("disabled", false);
+                $("#deleteBtn").attr("disabled", false);
+            });
+
+            // Deselect row when clicking outside the table
+            $(document).click(function () {
+                selectedCourseId = null; // Reset selectedCourseId
+                $("#coursesTable tr").removeClass('table-primary'); // Remove highlight from all rows
+                $("#modifyBtn").attr("disabled", true);
+                $("#deleteBtn").attr("disabled", true);
+            });
+
+            // Handle modify button click
+            $("#modifyBtn").click(function () {
+                if (selectedCourseId) {
+                    window.location.href = '@Url.Action("ModifyCourse", "Course")' + '?courseId=' + selectedCourseId;
+                }
+            });
+
+            // Handle delete button click
+            $("#deleteBtn").click(function () {
+                if (selectedCourseId) {
+                    if (confirm("Are you sure you want to delete this course?")) {
+                        window.location.href = '@Url.Action("DeleteCourse", "Course")' + '?courseId=' + selectedCourseId;
+                    }
+                }
+            });
+        });
+    </script>
+}

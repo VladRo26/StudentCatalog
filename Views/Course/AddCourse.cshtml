@@ -1,0 +1,24 @@
+﻿@model CourseModel
+@{
+    ViewData["Title"] = "Add Course";
+    List<SelectListItem> teachers = ViewBag.Teachers;
+}
+
+<div class="container">
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="form-group">
+            <label asp-for="@Model.Name" class="control-label">Name</label>
+            <input asp-for="@Model.Name" class="form-control" />
+            <span asp-validation-for="@Model.Name" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="@Model.TeacherId" class="control-label">Teacher Id</label>
+            <select asp-for="@Model.TeacherId" asp-items="@teachers" class="form-control"></select>
+            <span asp-validation-for="@Model.TeacherId" class="text-danger"></span>
+        </div>
+        <input type="submit" value="Adauga" />
+    </form>
+</div>
