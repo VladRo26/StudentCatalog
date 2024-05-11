@@ -1,6 +1,7 @@
 ﻿using StudentCatalog.Models;
 using Microsoft.EntityFrameworkCore;
 using Azure.Messaging;
+using Org.BouncyCastle.Crypto.Tls;
 
 namespace StudentCatalog.ContextModels;
 
@@ -42,6 +43,8 @@ public class DataContext : DbContext
            .WithMany() // Optionally add navigation property for a collection of received messages in UserModel
            .HasForeignKey(m => m.ReceiverId)
            .OnDelete(DeleteBehavior.ClientSetNull);
+
+     
 
     }
 
