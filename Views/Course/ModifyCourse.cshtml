@@ -19,6 +19,14 @@
             <select asp-for="@Model.TeacherId" asp-items="@teachers" class="form-control"></select>
             <span asp-validation-for="@Model.TeacherId" class="text-danger"></span>
         </div>
+
+        <div class="form-group">
+            <label asp-for="YearCourse" class="control-label">Course Year</label>
+            <input asp-for="YearCourse" type="number" class="form-control"
+                   placeholder="Enter the year of the course" min="1" max="4" />
+            <span asp-validation-for="YearCourse" class="text-danger"></span>
+        </div>
+
         <input type="hidden" asp-for="@Model.Id" />
         <input type="submit" value="Modify" />
     </form>

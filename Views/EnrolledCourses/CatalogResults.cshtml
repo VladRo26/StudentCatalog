@@ -1,0 +1,38 @@
+﻿@model List<StudentCatalog.Models.StudentCoursesModel>
+
+@{
+    ViewData["Title"] = "Catalog Results";
+}
+
+<h1>Catalog Results</h1>
+
+@if (Model.Any())
+{
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Student Name</th>
+                <th>Course Name</th>
+                <th>Group Number</th>
+                <th>Grade</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (StudentCoursesModel item in Model)
+            {
+                <tr>
+                    <td>@item.Student.User.FirstName</td>
+                    <td>@item.Course.Name</td>
+                    <td>@(item.Student.Group != null ? item.Student.Group.GroupNumber.ToString() : "No group")</td>
+                    <td>@item.Grade.ToString("0.##")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="alert alert-info" role="alert">
+        No students found for the selected criteria.
+    </div>
+}

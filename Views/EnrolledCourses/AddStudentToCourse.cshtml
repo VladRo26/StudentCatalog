@@ -1,0 +1,28 @@
+﻿@model StudentCatalog.Models.StudentCoursesModel
+
+@{
+    ViewData["Title"] = "Add Student to Course";
+    List<SelectListItem> students = ViewBag.students ?? new List<SelectListItem>();
+}
+
+<h2>Add Student to Course</h2>
+
+<div class="container">
+    <form method="post">
+        <input type="hidden" asp-for="@Model.CourseId" />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="@Model.StudentId" class="control-label">Student Id</label>
+            <select asp-for="@Model.StudentId" asp-items="@students" class="form-control"></select>
+            <span asp-validation-for="@Model.StudentId" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="@Model.Grade" class="control-label">Initial Grade</label>
+            <input asp-for="@Model.Grade" class="form-control" type="number" min="0" step="0.01" />
+        </div>
+        <button type="submit" class="btn btn-primary">Add Student</button>
+        
+    </form>
+</div>
+        

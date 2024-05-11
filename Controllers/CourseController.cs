@@ -181,9 +181,13 @@ public class CourseController : Controller
         _context.Remove(course);
         _context.SaveChanges();
         return RedirectToAction("Index");
-
-
     }
 
+    public IActionResult AddStudentError()
+    {
+        // You can pass a message from TempData if it's being set earlier
+        ViewBag.Message = TempData["Message"] as string;
+        return View();
+    }
 
 }

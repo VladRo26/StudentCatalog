@@ -41,7 +41,23 @@ namespace StudentCatalog.Controllers
 
             try
             {
-                user.Role = Enum.Parse<UserType>(data.Role, true);  
+                user.Role = Enum.Parse<UserType>(data.Role, true);
+
+                if (user.Role == UserType.Student && !_context.Studenti.Any(s => s.UserId == user.Id))
+                {
+                    // Create a new Student record if none exists
+                    var newStudent = new StudentModel
+                    {
+                        UserId = user.Id,
+                        User = user,
+                        YearOfStudy = null, 
+                        GroupId = null, 
+                        Group = null,
+                        IsEnrolled = null
+                    };
+                    _context.Studenti.Add(newStudent); // Add the new student to the context
+                }
+
                 _context.SaveChanges();
                 return Json(new { success = true, message = "Role updated successfully." });
             }

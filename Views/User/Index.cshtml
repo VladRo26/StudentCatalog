@@ -52,10 +52,13 @@
             window.saveChanges = function (userId) {
                 var role = $(`#usersTable tr[data-user-id="${userId}"] .role-dropdown`).val();
                 $.ajax({
-                    url: '/User/UpdateUserRole', 
+                    url: '/User/UpdateUserRole',
                     type: 'POST',
                     contentType: 'application/json',
                     data: JSON.stringify({ userId: userId, role: role }),
+                    headers: {
+                        "RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val()
+                    },
                     success: function (result) {
                         if (result.success) {
                             alert('Role updated successfully!');

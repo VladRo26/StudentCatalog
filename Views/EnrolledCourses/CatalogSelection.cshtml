@@ -1,0 +1,30 @@
+﻿@{
+    ViewData["Title"] = "Select Catalog";
+}
+
+<h1>Select Catalog</h1>
+
+<form method="get" asp-controller="EnrolledCourses" asp-action="CatalogResults">
+    <div>
+        <label for="Course">Select Course:</label>
+        <select name="courseId" class="form-control">
+            <option value="">All Courses</option>
+            @foreach (var course in ViewBag.Courses as List<SelectListItem>)
+            {
+                <option value="@course.Value">@course.Text</option>
+            }
+        </select>
+    </div>
+    <div>
+        <label for="Group">Select Group:</label>
+        <select name="groupId" class="form-control">
+            <option value="">All Groups</option>
+            @foreach (var group in ViewBag.Groups as List<SelectListItem>)
+            {
+                <option value="@group.Value">@group.Text</option>
+            }
+        </select>
+    </div>
+    <input type="submit" value="Show Catalog" class="btn btn-primary" />
+</form>
+
