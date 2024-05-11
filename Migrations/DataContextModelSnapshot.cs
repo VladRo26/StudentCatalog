@@ -32,8 +32,7 @@ namespace StudentCatalog.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("TeacherId")
                         .HasColumnType("int");
@@ -165,16 +164,16 @@ namespace StudentCatalog.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("GroupId")
+                    b.Property<int>("GroupId")
                         .HasColumnType("int");
 
-                    b.Property<bool?>("IsEnrolled")
+                    b.Property<bool>("IsEnrolled")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("UserId")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("YearOfStudy")
+                    b.Property<int>("YearOfStudy")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -289,11 +288,15 @@ namespace StudentCatalog.Migrations
                 {
                     b.HasOne("StudentCatalog.Models.GroupModel", "Group")
                         .WithMany()
-                        .HasForeignKey("GroupId");
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("StudentCatalog.Models.UserModel", "User")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Group");
 

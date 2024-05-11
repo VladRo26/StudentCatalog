@@ -12,8 +12,8 @@ using StudentCatalog.ContextModels;
 namespace StudentCatalog.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240510142207_nou")]
-    partial class nou
+    [Migration("20240511162149_newnew3")]
+    partial class newnew3
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -37,7 +37,7 @@ namespace StudentCatalog.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TeacherId")
+                    b.Property<int?>("TeacherId")
                         .HasColumnType("int");
 
                     b.Property<int>("YearCourse")
@@ -141,7 +141,7 @@ namespace StudentCatalog.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CourseId")
+                    b.Property<int?>("CourseId")
                         .HasColumnType("int");
 
                     b.Property<float>("Grade")
@@ -236,9 +236,7 @@ namespace StudentCatalog.Migrations
                 {
                     b.HasOne("StudentCatalog.Models.UserModel", "Teacher")
                         .WithMany()
-                        .HasForeignKey("TeacherId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("TeacherId");
 
                     b.Navigation("Teacher");
                 });
@@ -276,7 +274,7 @@ namespace StudentCatalog.Migrations
                     b.HasOne("StudentCatalog.Models.CourseModel", "Course")
                         .WithMany()
                         .HasForeignKey("CourseId")
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("StudentCatalog.Models.StudentModel", "Student")
                         .WithMany()
