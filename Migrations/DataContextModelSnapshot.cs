@@ -32,9 +32,10 @@ namespace StudentCatalog.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
-                    b.Property<int>("TeacherId")
+                    b.Property<int?>("TeacherId")
                         .HasColumnType("int");
 
                     b.Property<int>("YearCourse")
@@ -138,7 +139,7 @@ namespace StudentCatalog.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CourseId")
+                    b.Property<int?>("CourseId")
                         .HasColumnType("int");
 
                     b.Property<float>("Grade")
@@ -164,16 +165,16 @@ namespace StudentCatalog.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("GroupId")
+                    b.Property<int?>("GroupId")
                         .HasColumnType("int");
 
-                    b.Property<bool>("IsEnrolled")
+                    b.Property<bool?>("IsEnrolled")
                         .HasColumnType("bit");
 
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("int");
 
-                    b.Property<int>("YearOfStudy")
+                    b.Property<int?>("YearOfStudy")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -233,9 +234,7 @@ namespace StudentCatalog.Migrations
                 {
                     b.HasOne("StudentCatalog.Models.UserModel", "Teacher")
                         .WithMany()
-                        .HasForeignKey("TeacherId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("TeacherId");
 
                     b.Navigation("Teacher");
                 });
@@ -273,7 +272,7 @@ namespace StudentCatalog.Migrations
                     b.HasOne("StudentCatalog.Models.CourseModel", "Course")
                         .WithMany()
                         .HasForeignKey("CourseId")
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("StudentCatalog.Models.StudentModel", "Student")
                         .WithMany()
@@ -290,15 +289,11 @@ namespace StudentCatalog.Migrations
                 {
                     b.HasOne("StudentCatalog.Models.GroupModel", "Group")
                         .WithMany()
-                        .HasForeignKey("GroupId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("GroupId");
 
                     b.HasOne("StudentCatalog.Models.UserModel", "User")
                         .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("Group");
 

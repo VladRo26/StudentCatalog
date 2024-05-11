@@ -12,10 +12,9 @@ namespace StudentCatalog.Models
         //[ForeignKey("StudentId")]
         public StudentModel Student { get; set; }
 
-        //[ForeignKey("CourseId")]
-        [Required]
-        public int CourseId {  get; set; }
-        public CourseModel Course { get; set; }
+        [ForeignKey("CourseId")]
+        public int? CourseId {  get; set; }
+        public CourseModel? Course { get; set; }
         public float Grade { get; set; }
 
     }
