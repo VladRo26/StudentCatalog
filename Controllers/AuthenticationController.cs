@@ -68,18 +68,20 @@ public class AuthenticationController : Controller
     [HttpPost]
     public async Task<IActionResult> Login(UserModel model)
     {
-       
             try
             {
                 if(!model.Username.IsNullOrEmpty() && !model.Password.IsNullOrEmpty())
                 {
-                    if (context.Useri.Where(user => user.Username.ToLower() == model.Username.ToLower() && user.Password == model.Password).Count() > 0)
+                    UserModel? user = context.Useri.Where(user => user.Username.ToLower() == model.Username.ToLower() && user.Password == model.Password).FirstOrDefault();
+                    
+                    if (user!=null)
                     {
                         List<Claim> claims = new List<Claim>
-                {
-                        new Claim(ClaimTypes.Name, model.Username),
-                        new Claim("Role", model.Role.ToString())
-                };
+                        {
+                            new Claim(ClaimTypes.Name, user.Username),
+                            new Claim("Role", user.Role.ToString()),
+                            new Claim(ClaimTypes.NameIdentifier,user.Id.ToString())
+                        };
                         var claimIdentity = new ClaimsIdentity(claims, "AuthenticationCookie");
                         await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimIdentity));
                         return RedirectToAction("Index", "Home");
@@ -106,10 +108,12 @@ public class AuthenticationController : Controller
     [HttpGet]
     public async Task<IActionResult> Logout()
     {
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
         if (User.Identity.IsAuthenticated == false)
         {
             return RedirectToAction("Index", "Home");
         }
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
         await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
         return RedirectToAction("Login");
     }

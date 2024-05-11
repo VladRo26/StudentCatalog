@@ -11,5 +11,7 @@ public class CourseModel
 
     public int? TeacherId { get; set; }
 
-    public UserModel? Teacher { get; set; }
+    public UserModel Teacher { get; set; }
+
+    public int YearCourse { get; set; }
 }
