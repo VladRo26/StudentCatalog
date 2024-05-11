@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StudentCatalog.ContextModels;
 
@@ -11,9 +12,11 @@ using StudentCatalog.ContextModels;
 namespace StudentCatalog.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240510142207_nou")]
+    partial class nou
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,10 +35,9 @@ namespace StudentCatalog.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("TeacherId")
+                    b.Property<int>("TeacherId")
                         .HasColumnType("int");
 
                     b.Property<int>("YearCourse")
@@ -139,7 +141,7 @@ namespace StudentCatalog.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("CourseId")
+                    b.Property<int>("CourseId")
                         .HasColumnType("int");
 
                     b.Property<float>("Grade")
@@ -165,16 +167,16 @@ namespace StudentCatalog.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("GroupId")
+                    b.Property<int>("GroupId")
                         .HasColumnType("int");
 
-                    b.Property<bool?>("IsEnrolled")
+                    b.Property<bool>("IsEnrolled")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("UserId")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("YearOfStudy")
+                    b.Property<int>("YearOfStudy")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -234,7 +236,9 @@ namespace StudentCatalog.Migrations
                 {
                     b.HasOne("StudentCatalog.Models.UserModel", "Teacher")
                         .WithMany()
-                        .HasForeignKey("TeacherId");
+                        .HasForeignKey("TeacherId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Teacher");
                 });
@@ -272,7 +276,7 @@ namespace StudentCatalog.Migrations
                     b.HasOne("StudentCatalog.Models.CourseModel", "Course")
                         .WithMany()
                         .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .IsRequired();
 
                     b.HasOne("StudentCatalog.Models.StudentModel", "Student")
                         .WithMany()
@@ -289,11 +293,15 @@ namespace StudentCatalog.Migrations
                 {
                     b.HasOne("StudentCatalog.Models.GroupModel", "Group")
                         .WithMany()
-                        .HasForeignKey("GroupId");
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("StudentCatalog.Models.UserModel", "User")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Group");
 

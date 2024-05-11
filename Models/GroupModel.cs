@@ -7,8 +7,7 @@ public class GroupModel
 {
     public int Id { get; set; }
 
-    [MaxLength(3, ErrorMessage = "The group should contain 3 characters.")]
-    [MinLength(3, ErrorMessage = "The group should contain 3 characters.")]
+    [Range(100, 999, ErrorMessage = "The group number should be a 3-digit number.")]
     public int GroupNumber { get; set; }
 
 }
