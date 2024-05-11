@@ -4,7 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using StudentCatalog.ContextModels;
 using StudentCatalog.Models;
 using System.Diagnostics;
+using System.Reflection.Metadata;
 using System.Security.Claims;
+using System.IO;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
 
 namespace StudentCatalog.Controllers
 {
@@ -53,6 +57,8 @@ namespace StudentCatalog.Controllers
                                       .Include(s => s.Group) // Include the Group
                                       .FirstOrDefault(s => s.Id == int.Parse(studentId));
 
+
+
                     if (student != null)
                     {
                         ViewData["StudentYear"] = student.YearOfStudy.ToString();
@@ -61,6 +67,72 @@ namespace StudentCatalog.Controllers
                         // Assign the loaded student directly to the certificate
                         certificate.Student = student;
                     }
+                }
+
+                if(ModelState.IsValid)
+                {
+                   if(certificate.Student.IsEnrolled) {
+                        
+                        _context.Adeverinte.Add(certificate);
+                        _context.SaveChanges();
+                        
+                        
+                        using (MemoryStream stream = new MemoryStream())
+                        {
+                            StudentCertificateModel model = certificate;
+                            // Dimensiune pagină A4 cu margini ajustate
+                            iTextSharp.text.Document document = new iTextSharp.text.Document(PageSize.A4, 50, 50, 50, 50);
+                            PdfWriter writer = PdfWriter.GetInstance(document, stream);
+                            document.Open();
+
+                            // Fonturi pentru titluri și paragrafe
+                            Font titleFont = FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 16);
+                            Font paragraphFont = FontFactory.GetFont(FontFactory.HELVETICA, 12);
+
+                            // Adăugăm un titlu centralizat
+                            Paragraph title = new Paragraph("Adeverinta de student", titleFont)
+                            {
+                                Alignment = Element.ALIGN_CENTER
+                            };
+                            document.Add(title);
+
+                            // Linie de separare
+                            document.Add(new Paragraph("\n"));
+
+                            document.Add(new Paragraph($"Elevul(a)  {model.FirstName} {model.LastName} este inscris la Facultatea de Matematica si Informatica, Specializarea: Informatica Anul de studiu: {model.Student.YearOfStudy} , Grupa: {model.Student.Group.GroupNumber} ", paragraphFont));
+                            document.Add(new Paragraph($"Eliberam prezenta pentru a-i servi la : {model.Reason}", paragraphFont));
+
+
+                            document.Add(new Paragraph($"Numar de telefon: {model.PhoneNumber}", paragraphFont));
+                            // Dată eliberare și spațiu pentru semnături
+                            document.Add(new Paragraph($"Data eliberării: {model.CreatedDate}", paragraphFont));
+                            document.Add(new Paragraph("\n\n\n\n"));
+
+                            // Semnătură Decan/Director și spațiu pentru ștampilă
+                            Paragraph signatureSection = new Paragraph("Semnătura decanului/directorului: _____________________", paragraphFont);
+                            signatureSection.SpacingBefore = 20;
+                            signatureSection.SpacingAfter = 20;
+                            document.Add(signatureSection);
+                            document.Add(new Paragraph("Stampila instituției", paragraphFont));
+
+                            // Închide documentul PDF
+                            document.Close();
+                            writer.Close();
+                            
+                            byte[] bytes = stream.ToArray();
+                            return File(bytes, "application/pdf", $"{model.FirstName}_{model.LastName}_Adeverinta.pdf");
+                          
+                      
+                        }
+                        
+
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, "You are not enrolled for this University Year");
+                    }
+                    
+                    return View();
                 }
             }
 
@@ -82,6 +154,8 @@ namespace StudentCatalog.Controllers
             return View(certificate);
 
         }
+     
+      
 
 
     }

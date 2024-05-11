@@ -1,6 +1,7 @@
 ﻿using StudentCatalog.Models;
 using Microsoft.EntityFrameworkCore;
 using Azure.Messaging;
+using Org.BouncyCastle.Crypto.Tls;
 
 namespace StudentCatalog.ContextModels;
 
