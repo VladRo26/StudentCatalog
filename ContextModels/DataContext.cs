@@ -15,6 +15,8 @@ public class DataContext : DbContext
     public DbSet<StudentModel> Studenti { get; set; }
     public DbSet<StudentCoursesModel> CursuriStudenti { get; set; }
 
+    public DbSet<StudentCertificateModel> Adeverinte { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<MessagesModel>()
