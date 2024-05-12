@@ -80,7 +80,7 @@ public class EnrolledCoursesController : Controller
     [HttpPost]
     public IActionResult AddStudentToCourse(StudentCoursesModel newEnrollment)
     {
-        newEnrollment.Course = _context.Cursuri.Where(c => c.Id == newEnrollment.CourseId).FirstOrDefault();
+        newEnrollment.Course = _context.Cursuri.Where(c => c.Id == newEnrollment.CourseId).Include(s=>s.Teacher).FirstOrDefault();
         newEnrollment.Student = _context.Studenti.Where(s => s.Id == newEnrollment.StudentId).FirstOrDefault();
 
         if (!ModelState.IsValid)
@@ -105,6 +105,8 @@ public class EnrolledCoursesController : Controller
 
         }
         _context.CursuriStudenti.Add(newEnrollment);
+        AlertModel alert = new AlertModel(newEnrollment.Student, String.Format("Ai fost Adaugat la cursul {0} predat de {1}", newEnrollment.Course.Name, newEnrollment.Course.Teacher.FirstName+" "+newEnrollment.Course.Teacher.LastName));
+        _context.Alerte.Add(alert);
         _context.SaveChanges();
 
         // Redirect to wherever is appropriate, such as the list of enrolled courses
@@ -268,8 +270,15 @@ public class EnrolledCoursesController : Controller
         {
             if(actualCS.Grade>=0 && actualCS.Grade <= 10)
             {
-                newCS.Grade = actualCS.Grade;
-                _context.SaveChanges();
+                if(actualCS.Grade!= _context.CursuriStudenti.Where(cs => cs.Id == modelId).FirstOrDefault().Grade)
+                {
+                    newCS.Grade = actualCS.Grade;
+                    AlertModel alert = new AlertModel(newCS.Student, String.Format("Nota ta de la materia {0} a fost modificata . Nota ta este acum {1}", newCS.Course.Name, newCS.Grade));
+                    _context.Alerte.Add(alert);
+                    _context.SaveChanges();
+                   
+                }
+               
                 return RedirectToAction("CatalogResults");
             }
               

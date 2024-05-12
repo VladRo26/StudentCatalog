@@ -39,6 +39,7 @@ public class AuthenticationController : Controller
                 {
                     try
                     {
+                        model.Role = Logic.UserType.RolNeasignat;
                         context.Useri.Add(model);
                         context.SaveChanges();
                         return RedirectToAction("Index", "Home");

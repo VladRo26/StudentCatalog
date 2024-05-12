@@ -17,6 +17,7 @@ public class DataContext : DbContext
     public DbSet<StudentCoursesModel> CursuriStudenti { get; set; }
 
     public DbSet<StudentCertificateModel> Adeverinte { get; set; }
+    public DbSet<AlertModel> Alerte { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
