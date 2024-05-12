@@ -276,17 +276,18 @@ public class EnrolledCoursesController : Controller
                     AlertModel alert = new AlertModel(newCS.Student, String.Format("Nota ta de la materia {0} a fost modificata . Nota ta este acum {1}", newCS.Course.Name, newCS.Grade));
                     _context.Alerte.Add(alert);
                     _context.SaveChanges();
-                   
+                    TempData["UpdateGradeError"] = "Error on update grade!";
+
                 }
                
                 return RedirectToAction("CatalogResults");
             }
-              
+            TempData["UpdateGradeError"] = "Grade should be between 0 and 10";
 
         }
         else
         {
-            ViewData["MessageError"] = "Error on update grade!";
+            TempData["UpdateGradeError"] = "Error on update grade!";
         }
         return RedirectToAction("CatalogResults");
     }
