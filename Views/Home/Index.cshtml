@@ -1,9 +1,30 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
     string userRole = User?.Claims.FirstOrDefault(claim => claim.Type == "Role")?.Value ?? "Nimic";
+    string userFirstName = User?.Claims.FirstOrDefault(claim => claim.Type == "FirstName")?.Value;
+    string userLastName = User?.Claims.FirstOrDefault(claim => claim.Type == "LastName")?.Value;
+
+    
 }
 
+
 <div class="text-center">
-    <h1 class="display-4">Welcome : @userRole </h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+    
+    @if (User.Identity.IsAuthenticated)
+    {
+        <h1 class="display-4">Welcome :@(String.Format("{0} {1}", userFirstName, userLastName))  </h1>
+        
+       @model List<AlertModel>
+
+        for (int i = 0; i < Model.Count; i++)
+        {
+            <p>@Model[i].Alert</p>
+        }
+    }
+    else
+    {
+        <h1 class="display-4">Welcome : @userRole </h1>
+        <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    }
 </div>

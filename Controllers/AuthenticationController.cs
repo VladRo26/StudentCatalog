@@ -21,6 +21,7 @@ public class AuthenticationController : Controller
     }
     public IActionResult Index()
     {
+       
         return View();
     }
 
@@ -77,14 +78,17 @@ public class AuthenticationController : Controller
                     
                     if (user!=null)
                     {
-                        List<Claim> claims = new List<Claim>
+                    List<Claim> claims = new List<Claim>
                         {
                             new Claim(ClaimTypes.Name, user.Username),
                             new Claim("Role", user.Role.ToString()),
-                            new Claim(ClaimTypes.NameIdentifier,user.Id.ToString())
+                            new Claim(ClaimTypes.NameIdentifier,user.Id.ToString()),
+                            new Claim("FirstName", user.FirstName),
+                            new Claim("LastName", user.LastName)
                         };
                         var claimIdentity = new ClaimsIdentity(claims, "AuthenticationCookie");
                         await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimIdentity));
+                        
                         return RedirectToAction("Index", "Home");
                     }
                         else

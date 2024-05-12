@@ -167,6 +167,12 @@ public class EnrolledCoursesController : Controller
     {
         List<StudentCoursesModel> results = new List<StudentCoursesModel>();
 
+        if (TempData["UpdateGradeError"] != null)
+        {
+            ViewBag.UpdateGradeError = TempData["UpdateGradeError"];
+            ViewBag.recordId = TempData["RecordId"];
+        }
+
         results = _context.CursuriStudenti
                 .Include(sc => sc.Student)
                 .Include(sc => sc.Student.User)
@@ -276,7 +282,6 @@ public class EnrolledCoursesController : Controller
                     AlertModel alert = new AlertModel(newCS.Student, String.Format("Nota ta de la materia {0} a fost modificata . Nota ta este acum {1}", newCS.Course.Name, newCS.Grade));
                     _context.Alerte.Add(alert);
                     _context.SaveChanges();
-                    TempData["UpdateGradeError"] = "Error on update grade!";
 
                 }
                
@@ -289,6 +294,7 @@ public class EnrolledCoursesController : Controller
         {
             TempData["UpdateGradeError"] = "Error on update grade!";
         }
+        TempData["RecordId"] = modelId;
         return RedirectToAction("CatalogResults");
     }
   
