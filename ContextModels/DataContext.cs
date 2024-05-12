@@ -53,6 +53,11 @@ public class DataContext : DbContext
         modelBuilder.Entity<CourseModel>()
             .Property(c => c.TeacherId)
             .IsRequired(false);
+
+        modelBuilder.Entity<StudentCoursesModel>(entity =>
+        {
+            entity.Property(e => e.Grade).HasDefaultValue(0);  // Explicitly setting it to nullable
+        });
     }
 
 

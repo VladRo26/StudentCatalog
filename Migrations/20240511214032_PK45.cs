@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace StudentCatalog.Migrations
 {
     /// <inheritdoc />
-    public partial class migrare4 : Migration
+    public partial class PK45 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -17,7 +17,7 @@ namespace StudentCatalog.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    GroupNumber = table.Column<int>(type: "int", maxLength: 3, nullable: false)
+                    GroupNumber = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {

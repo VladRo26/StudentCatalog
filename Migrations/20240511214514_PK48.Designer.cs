@@ -12,8 +12,8 @@ using StudentCatalog.ContextModels;
 namespace StudentCatalog.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240511162149_newnew3")]
-    partial class newnew3
+    [Migration("20240511214514_PK48")]
+    partial class PK48
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -35,7 +35,8 @@ namespace StudentCatalog.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int?>("TeacherId")
                         .HasColumnType("int");
@@ -145,7 +146,9 @@ namespace StudentCatalog.Migrations
                         .HasColumnType("int");
 
                     b.Property<float>("Grade")
-                        .HasColumnType("real");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("real")
+                        .HasDefaultValue(0f);
 
                     b.Property<int>("StudentId")
                         .HasColumnType("int");
@@ -167,16 +170,16 @@ namespace StudentCatalog.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("GroupId")
+                    b.Property<int?>("GroupId")
                         .HasColumnType("int");
 
-                    b.Property<bool>("IsEnrolled")
+                    b.Property<bool?>("IsEnrolled")
                         .HasColumnType("bit");
 
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("int");
 
-                    b.Property<int>("YearOfStudy")
+                    b.Property<int?>("YearOfStudy")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -291,15 +294,11 @@ namespace StudentCatalog.Migrations
                 {
                     b.HasOne("StudentCatalog.Models.GroupModel", "Group")
                         .WithMany()
-                        .HasForeignKey("GroupId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("GroupId");
 
                     b.HasOne("StudentCatalog.Models.UserModel", "User")
                         .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("Group");
 

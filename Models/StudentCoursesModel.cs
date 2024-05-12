@@ -15,6 +15,7 @@ namespace StudentCatalog.Models
         [ForeignKey("CourseId")]
         public int? CourseId {  get; set; }
         public CourseModel? Course { get; set; }
+        [Range(0, 10, ErrorMessage = "Grade should be between 0 and 10.")]
         public float Grade { get; set; }
 
     }

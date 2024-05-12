@@ -71,7 +71,7 @@ namespace StudentCatalog.Controllers
 
                 if(ModelState.IsValid)
                 {
-                   if(certificate.Student.IsEnrolled) {
+                   if(certificate.Student.IsEnrolled.Equals(true)) {
                         
                         _context.Adeverinte.Add(certificate);
                         _context.SaveChanges();

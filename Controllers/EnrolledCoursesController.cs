@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using iTextSharp.text.pdf;
+using iTextSharp.text;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using StudentCatalog.ContextModels;
 using StudentCatalog.Models;
 using System.Security.Claims;
+using StudentCatalog.Logic;
 
 namespace StudentCatalog.Controllers;
 
@@ -31,18 +34,18 @@ public class EnrolledCoursesController : Controller
                                     .Select(u => u.Id)
                                     .FirstOrDefault().ToString();
 
-        CursuriStudent = _context.CursuriStudenti.Include(cursuri =>cursuri.Course )
-            .Where(courseStudent=>courseStudent.StudentId==Int16.Parse(studentId))
+        CursuriStudent = _context.CursuriStudenti.Include(cursuri => cursuri.Course)
+            .Where(courseStudent => courseStudent.StudentId == Int16.Parse(studentId))
             .ToList();
 
 
 
         ViewData["StudentYear"] = _context.Studenti
-                                    .Where(s=>s.UserId==Int16.Parse(userId))
-                                    .Select(u=>u.YearOfStudy)
-                                    .FirstOrDefault();    
+                                    .Where(s => s.UserId == Int16.Parse(userId))
+                                    .Select(u => u.YearOfStudy)
+                                    .FirstOrDefault();
 
-        return View("StudentCourses",CursuriStudent);
+        return View("StudentCourses", CursuriStudent);
     }
 
     [HttpGet]
@@ -105,22 +108,56 @@ public class EnrolledCoursesController : Controller
         _context.SaveChanges();
 
         // Redirect to wherever is appropriate, such as the list of enrolled courses
-        return RedirectToAction("Index","Course");
+        return RedirectToAction("Index", "Course");
     }
 
     [HttpGet]
     public IActionResult CatalogSelection()
     {
         // Populate ViewBag with courses and groups
-        ViewBag.Courses = _context.Cursuri
+        string userRole = User.Claims.FirstOrDefault(claim => claim.Type == "Role")?.Value! ?? UserType.UtilizatorNelogat.ToString();
+        string userId = User.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.NameIdentifier)?.Value!;
+
+
+        if (userRole.Equals(UserType.Profesor.ToString())) {
+
+            ViewBag.Courses = _context.Cursuri
+            .Where(c => c.TeacherId == int.Parse(userId))
             .Select(course => new SelectListItem { Text = course.Name, Value = course.Id.ToString() })
             .ToList();
 
-        ViewBag.Groups = _context.Grupe
-            .Select(group => new SelectListItem { Text = group.GroupNumber.ToString(), Value = group.Id.ToString() })
+
+            var courseIds = _context.Cursuri
+                           .Where(c => c.TeacherId == int.Parse(userId))
+                           .Select(c => c.Id)
+                           .ToList();
+
+            // Fetch unique groups of students who are enrolled in these courses
+            ViewBag.Groups = _context.CursuriStudenti
+                                        .Include(cs => cs.Student)
+                                        .ThenInclude(s => s.Group)
+                                        .Where(cs => courseIds.Contains(cs.CourseId.GetValueOrDefault()))
+                                        .Select(cs => new SelectListItem { Text = cs.Student.Group.GroupNumber.ToString(), Value = cs.Student.Group.Id.ToString() })
+                                        .Distinct()
+                                        .ToList();
+
+
+        }
+        else if (!userRole.Equals(UserType.UtilizatorNelogat.ToString()))
+        {
+            ViewBag.Courses = _context.Cursuri
+            .Select(course => new SelectListItem { Text = course.Name, Value = course.Id.ToString() })
             .ToList();
 
-        return View("CatalogSelection");
+
+            ViewBag.Groups = _context.Grupe
+                .Select(group => new SelectListItem { Text = group.GroupNumber.ToString(), Value = group.Id.ToString() })
+                .ToList();
+
+        }
+
+
+        return View();
     }
 
     [HttpGet]
@@ -131,7 +168,7 @@ public class EnrolledCoursesController : Controller
         results = _context.CursuriStudenti
                 .Include(sc => sc.Student)
                 .Include(sc => sc.Student.User)
-                .Include(sc =>sc.Student.Group)
+                .Include(sc => sc.Student.Group)
                 .Include(sc => sc.Course)
                 .ToList();
 
@@ -171,4 +208,79 @@ public class EnrolledCoursesController : Controller
 
         return View("CatalogResults", results);
     }
+    [HttpPost]
+    public ActionResult ExportCatalog(List<StudentCoursesModel> model)
+    {
+        using (MemoryStream memoryStream = new MemoryStream())
+        {
+            // Create a Document object
+            var document = new Document(PageSize.A4, 25, 25, 30, 30);
+
+            // Create a PDF writer that listens to the document
+            PdfWriter writer = PdfWriter.GetInstance(document, memoryStream);
+
+            // Open the document
+            document.Open();
+
+            // Add a title
+            document.Add(new Paragraph("Catalog Results"));
+            document.Add(new Paragraph("\n\n\n"));
+
+            // Create a table with four columns
+            PdfPTable table = new PdfPTable(4);
+            table.WidthPercentage = 100;
+
+            // Add headers
+            table.AddCell("Student Name");
+            table.AddCell("Course Name");
+            table.AddCell("Group Number");
+            table.AddCell("Grade");
+
+            // Add data rows
+            foreach (var item in model)
+            {
+                table.AddCell(item.Student.User.FirstName);
+                table.AddCell(item.Course.Name);
+                table.AddCell(item.Student.Group != null ? item.Student.Group.GroupNumber.ToString() : "No group");
+                table.AddCell(item.Grade.ToString("0.##"));
+            }
+
+            // Add table to document
+            document.Add(table);
+
+            // Close the document
+            document.Close();
+
+            // Write the PDF to memory stream
+            byte[] bytes = memoryStream.ToArray();
+
+            // Send the PDF as a file result
+            return File(bytes, "application/pdf", "CatalogResults.pdf");
+        }
+    }
+
+    [HttpPost]
+    public IActionResult UpdateGrade(int modelId,List<StudentCoursesModel> model)
+    {
+        StudentCoursesModel actualCS = model.Where(cs => cs.Id == modelId).FirstOrDefault();
+        StudentCoursesModel newCS= _context.CursuriStudenti.Where(cs => cs.Id == actualCS.Id).Include(cs=>cs.Course).Include(cs=>cs.Student).FirstOrDefault();
+        if (newCS!=null )
+        {
+            if(actualCS.Grade>=0 && actualCS.Grade <= 10)
+            {
+                newCS.Grade = actualCS.Grade;
+                _context.SaveChanges();
+                return RedirectToAction("CatalogResults");
+            }
+              
+
+        }
+        else
+        {
+            ViewData["MessageError"] = "Error on update grade!";
+        }
+        return RedirectToAction("CatalogResults");
+    }
+  
+
 }
