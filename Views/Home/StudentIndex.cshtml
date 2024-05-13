@@ -1,0 +1,29 @@
+﻿
+@{
+    string userFirstName = User?.Claims.FirstOrDefault(claim => claim.Type == "FirstName")?.Value;
+    string userLastName = User?.Claims.FirstOrDefault(claim => claim.Type == "LastName")?.Value;
+}
+@model List<AlertModel>
+
+<div class="text-center">
+    <h1 class="display-4">Welcome back , @(String.Format("{0} {1}", userFirstName, userLastName))  </h1>
+@{
+        <div class="scrollable-container">
+            @{
+                for (int i = 0; i < Model.Count; i++)
+                {
+                    <p>@Model[i].Alert</p>
+                }
+            }
+        </div>
+       
+ }
+ </div>
+
+<style>
+    .scrollable-container {
+        max-height: 200px; /* Adjust the height as needed */
+        overflow-y: auto;
+        margin-top: 20px; /* Optional: Adds some space between the title and the alerts */
+    }
+</style>

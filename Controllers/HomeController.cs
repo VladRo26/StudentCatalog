@@ -21,12 +21,12 @@ namespace StudentCatalog.Controllers
         public IActionResult Index()
         {
             string userRole = User?.Claims.FirstOrDefault(claim => claim.Type == "Role")?.Value;
-            int userId = int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
+            int userId = int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value ?? "0") ;
             if(userRole == UserType.Student.ToString())
             {
                 int studentId = _context.Studenti.Where(s => s.UserId == userId).Select(s=>s.Id).FirstOrDefault();
                 List<AlertModel> alerts = _context.Alerte.Where(a=>a.StudentId == studentId && a.IsRead==false).ToList();
-                return View(alerts);
+                return View("StudentIndex",alerts);
             }
             return View();
         }
