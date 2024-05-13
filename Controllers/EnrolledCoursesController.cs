@@ -145,7 +145,7 @@ public class EnrolledCoursesController : Controller
 
 
         }
-        else if (!userRole.Equals(UserType.UtilizatorNelogat.ToString()))
+        else if (userRole.Equals(UserType.Secretar.ToString()))
         {
             ViewBag.Courses = _context.Cursuri
             .Select(course => new SelectListItem { Text = course.Name, Value = course.Id.ToString() })
@@ -173,17 +173,34 @@ public class EnrolledCoursesController : Controller
             ViewBag.recordId = TempData["RecordId"];
         }
 
-        results = _context.CursuriStudenti
+        string userRole = User.Claims.FirstOrDefault(claim => claim.Type == "Role")?.Value! ?? UserType.UtilizatorNelogat.ToString();
+        string userId = User.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.NameIdentifier)?.Value ?? "0";
+
+        if (userRole == UserType.Profesor.ToString())
+        {
+            results = _context.CursuriStudenti
+                .Include(sc => sc.Student)
+                .Include(sc => sc.Student.User)
+                .Include(sc => sc.Student.Group)
+                .Include(sc => sc.Course)
+                .Where(sc=>sc.Course.TeacherId==int.Parse(userId))
+                .ToList();
+        }
+        else
+        {
+            results = _context.CursuriStudenti
                 .Include(sc => sc.Student)
                 .Include(sc => sc.Student.User)
                 .Include(sc => sc.Student.Group)
                 .Include(sc => sc.Course)
                 .ToList();
+        }
+        
 
         // Apply the course filter
         if (courseId.HasValue)
         {
-            results = _context.CursuriStudenti
+            results = results
                 .Where(sc => sc.CourseId == courseId.Value)
                 .ToList();
         }

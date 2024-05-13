@@ -4,8 +4,10 @@
 
 @{
     ViewData["Title"] = "Courses";
-}
+    string userRole = User?.Claims.FirstOrDefault(claim => claim.Type == "Role")?.Value ?? "Nimic";
 
+}
+@using StudentCatalog.Logic
 
 <h1>Courses</h1>
 
@@ -19,7 +21,6 @@
     <button type="submit" class="btn btn-primary mb-2">Search</button>
 </form>
 
-
 <table class="table" id="coursesTable">
     <thead>
         <tr>
@@ -30,7 +31,7 @@
     <tbody>
         @foreach (CourseModel course in Model)
         {
-            <tr data-course-id="@course.Id">
+            <tr data-course-id="@course.Id" >
                 <td>@course.Name</td>
                 <td>@(course.Teacher != null ? course.Teacher.LastName : "No Teacher")</td>
             </tr>
@@ -38,13 +39,20 @@
     </tbody>
 </table>
 
-<div>
-    <button id="addBtn" class="btn btn-success" onclick="location.href='@Url.Action("AddCourse", "Course")'">Add Course</button>
-    <button id="modifyBtn" disabled="disabled" class="btn btn-primary">Modify</button>
-    <button id="deleteBtn" disabled="disabled" class="btn btn-danger">Delete</button>
-    <button id="addStudentBtn" class="btn btn-info" disabled="disabled">Add Student</button>
+@if (userRole == UserType.Moderator.ToString())
+{
+   
 
-</div>
+    <div>
+        <button id="addBtn" class="btn btn-success" onclick="location.href='@Url.Action("AddCourse", "Course")'">Add Course</button>
+        <button id="modifyBtn" disabled="disabled" class="btn btn-primary">Modify</button>
+        <button id="deleteBtn" disabled="disabled" class="btn btn-danger">Delete</button>
+        <button id="addStudentBtn" class="btn btn-info" disabled="disabled">Add Student</button>
+
+    </div>
+}
+
+
 
 @section Scripts {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

@@ -28,7 +28,7 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Course" asp-action="Index">Cursuri</a>
                         </li>
                         @if (userRole.ToString() == UserType.Student.ToString())
                         {
@@ -40,8 +40,37 @@
                             </li>
                         }
 
+                        @if (userRole.ToString() == UserType.Profesor.ToString() || userRole.ToString() == UserType.Secretar.ToString()  )
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="EnrolledCourses" asp-action="CatalogSelection">Catalog Online</a>
+                            </li>
+                        }
+
+                        @if (userRole.ToString() == UserType.Profesor.ToString())
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Messages" asp-action="Inbox">Inbox</a>
+                            </li>
+                        }
+
+                        @if (userRole.ToString() == UserType.Secretar.ToString())
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Messages" asp-action="CreateMessage">Scrie un Mesaj</a>
+                            </li>
+                        }
+
+                        @if (userRole.ToString() == UserType.Moderator.ToString())
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Index">Management Useri</a>
+                            </li>
+                        }
+                      
+                            
                         
-                        
+
  
                     </ul>
                     <div class="login-buttons">

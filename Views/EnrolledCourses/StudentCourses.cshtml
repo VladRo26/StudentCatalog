@@ -85,14 +85,14 @@
             rows.sort((a, b) => {
                 var gradeA = parseFloat(a.dataset.grade);
                 var gradeB = parseFloat(b.dataset.grade);
-                return gradeB - gradeA;
+                return !gradeB - gradeA;
             });
         } else if (selectedOption === "4") {
             // Sort rows by grade (numerically, descending)
             rows.sort((a, b) => {
                 var gradeA = parseFloat(a.dataset.grade);
                 var gradeB = parseFloat(b.dataset.grade);
-                return !gradeB - gradeA;
+                return gradeB - gradeA;
             });
         }
 

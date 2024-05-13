@@ -15,7 +15,11 @@
 @if (Model.Any())
 {
     <form asp-controller="EnrolledCourses" asp-action="ExportCatalog" method="post">
-        <button type="submit" class="btn btn-primary mt-3">Export Catalog</button>
+        @if(userRole == UserType.Secretar.ToString())
+        {
+            <button type="submit" class="btn btn-primary mt-3">Export Catalog</button>
+        }
+      
         
                
                 @for (int i = 0; i < Model.Count; i++)
@@ -30,70 +34,74 @@
        
     </form>
 
-    <form asp-controller="EnrolledCourses" asp-action="UpdateGrade" method="post">
+    @if (userRole == UserType.Profesor.ToString())
+    {
+        <form asp-controller="EnrolledCourses" asp-action="UpdateGrade" method="post">
 
-        <table class="table table-striped" >
-            <thead class="thead-dark">
-                <tr>
-                    <th>Student Name</th>
-                    <th>Course Name</th>
-                    <th>Group Number</th>
-                    <th>Grade</th>
-
-                </tr>
-            </thead>
-            <tbody>
-                @for (int i = 0; i < Model.Count; i++)
-                {
-
-
+            <table class="table table-striped">
+                <thead class="thead-dark">
                     <tr>
-
-                        <td>@Model[i].Student.User.FirstName</td>
-                        <td>@Model[i].Course.Name</td>
-                        <td>@(Model[i].Student.Group != null ? Model[i].Student.Group.GroupNumber.ToString() : "No group")</td>
-                        <td>@Model[i].Grade</td>
-
-                        @{
-                            if (userRole.ToString() == UserType.Profesor.ToString())
-                            {
-                                <td style="width:5%">
-
-                                    <input type="text" asp-for="@Model[i].Grade" class="form-control"  />
-                                    <span asp-validation-for="@Model[i].Grade" class="text-danger"></span>
-                                    <input type="hidden" asp-for="@Model[i].Id" />
-                                </td>
-                                <td style="width:15%">
-                                    <button type="submit" name="modelId" value="@Model[i].Id" class="btn btn-primary">Update Grade</button>
-                                </td>
-                               
-                                <td style="width:25%">
-                                    @if (ViewBag.UpdateGradeError != null && Model[i].Id == ViewBag.RecordId)
-                                    {
-                                        <div class="control-label" style="color:red">
-                                            @ViewBag.UpdateGradeError
-                                        </div>
-                                    }
-                                </td>
-                                
-                              
-                               
-                            }
-
-                        }
-
+                        <th>Student Name</th>
+                        <th>Course Name</th>
+                        <th>Group Number</th>
+                        <th>Grade</th>
 
                     </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.Count; i++)
+                    {
+
+
+                        <tr>
+
+                            <td>@Model[i].Student.User.FirstName</td>
+                            <td>@Model[i].Course.Name</td>
+                            <td>@(Model[i].Student.Group != null ? Model[i].Student.Group.GroupNumber.ToString() : "No group")</td>
+                            <td>@Model[i].Grade</td>
+
+                            @{
+                                if (userRole.ToString() == UserType.Profesor.ToString())
+                                {
+                                    <td style="width:5%">
+
+                                        <input type="text" asp-for="@Model[i].Grade" class="form-control" />
+                                        <span asp-validation-for="@Model[i].Grade" class="text-danger"></span>
+                                        <input type="hidden" asp-for="@Model[i].Id" />
+                                    </td>
+                                    <td style="width:15%">
+                                        <button type="submit" name="modelId" value="@Model[i].Id" class="btn btn-primary">Update Grade</button>
+                                    </td>
+
+                                    <td style="width:25%">
+                                        @if (ViewBag.UpdateGradeError != null && Model[i].Id == ViewBag.RecordId)
+                                        {
+                                            <div class="control-label" style="color:red">
+                                                @ViewBag.UpdateGradeError
+                                            </div>
+                                        }
+                                    </td>
 
 
 
-                }
-              
+                                }
 
-            </tbody>
-        </table>
-        
-    </form>
+                            }
+
+
+                        </tr>
+
+
+
+                    }
+
+
+                </tbody>
+            </table>
+
+        </form>
+    }
+    
 }
 else
 {
