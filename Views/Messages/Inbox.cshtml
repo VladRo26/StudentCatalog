@@ -1,0 +1,29 @@
+﻿@model IEnumerable<StudentCatalog.Models.MessagesModel>
+
+@{
+    ViewBag.Title = "Inbox";
+}
+
+<h2>Inbox</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Sender</th>
+            <th>Message</th>
+            <th>Timestamp</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var message in Model)
+        {
+            <tr>
+                <td>@message.Sender.FirstName @message.Sender.LastName</td>
+                <td>@message.Message</td>
+                <td>@message.TimeStamp.Value.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                <td>@Html.ActionLink("Details", "Details", new { id = message.Id })</td>
+            </tr>
+        }
+    </tbody>
+</table>

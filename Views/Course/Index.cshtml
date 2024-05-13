@@ -1,10 +1,17 @@
 ﻿@model List<CourseModel>
 
+
+
 @{
     ViewData["Title"] = "Courses";
 }
 
+
 <h1>Courses</h1>
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/Course.css">
+}
 
 <form asp-controller="Search" asp-action="SearchPortal" method="get" class="form-inline">
     <input type="text" class="form-control mb-2 mr-sm-2" name="CourseName" placeholder="Course Name..." value="@ViewBag.CourseName"/>

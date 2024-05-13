@@ -1,0 +1,26 @@
+﻿@model StudentCatalog.Models.MessagesModel
+
+@{
+    ViewData["Title"] = "Create Message";
+    List<SelectListItem> teachers = ViewBag.Teachers;
+}
+
+<div class="container">
+    <form asp-action="LoadMessage" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="form-group">
+            <label asp-for="ReceiverId" class="control-label">Recipient Teacher</label>
+            <select asp-for="ReceiverId" asp-items="ViewBag.Teachers" class="form-control"></select>
+            <span asp-validation-for="ReceiverId" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Message" class="control-label">Message</label>
+            <input asp-for="Message" class="form-control" />
+            <span asp-validation-for="Message" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-default">Submit</button>
+    </form>
+</div>

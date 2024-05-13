@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using StudentCatalog.ContextModels;
 using StudentCatalog.Logic;
 using StudentCatalog.Models;
@@ -23,6 +24,12 @@ namespace StudentCatalog.Controllers
         public IActionResult Index()
         {
             Users = _context.Useri.ToList();
+            var userStudentMapping = _context.Studenti
+                                     .Where(student => student.UserId.HasValue)
+                                     .ToDictionary(student => student.UserId.Value, student => student.Id);
+
+            ViewBag.UserStudentMapping = userStudentMapping;
+
             if (Users == null)
             {
                 return RedirectToAction("Error", "Home");
@@ -53,7 +60,7 @@ namespace StudentCatalog.Controllers
                         YearOfStudy = null, 
                         GroupId = null, 
                         Group = null,
-                        IsEnrolled = null
+                        IsEnrolled = false
                     };
                     _context.Studenti.Add(newStudent); // Add the new student to the context
                 }

@@ -101,16 +101,15 @@ namespace StudentCatalog.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Message")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ReceiverId")
+                    b.Property<int?>("ReceiverId")
                         .HasColumnType("int");
 
-                    b.Property<int>("SenderId")
+                    b.Property<int?>("SenderId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("TimeStamp")
+                    b.Property<DateTime?>("TimeStamp")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -284,13 +283,11 @@ namespace StudentCatalog.Migrations
                 {
                     b.HasOne("StudentCatalog.Models.UserModel", "Receiver")
                         .WithMany()
-                        .HasForeignKey("ReceiverId")
-                        .IsRequired();
+                        .HasForeignKey("ReceiverId");
 
                     b.HasOne("StudentCatalog.Models.UserModel", "Sender")
                         .WithMany()
-                        .HasForeignKey("SenderId")
-                        .IsRequired();
+                        .HasForeignKey("SenderId");
 
                     b.Navigation("Receiver");
 
