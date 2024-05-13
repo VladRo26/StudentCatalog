@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace StudentCatalog.Migrations
 {
     /// <inheritdoc />
-    public partial class PK45 : Migration
+    public partial class migrare : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -141,6 +141,28 @@ namespace StudentCatalog.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Alerte",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    StudentId = table.Column<int>(type: "int", nullable: false),
+                    Alert = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsRead = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Alerte", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Alerte_Studenti_StudentId",
+                        column: x => x.StudentId,
+                        principalTable: "Studenti",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "CursuriStudenti",
                 columns: table => new
                 {
@@ -148,7 +170,7 @@ namespace StudentCatalog.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     StudentId = table.Column<int>(type: "int", nullable: false),
                     CourseId = table.Column<int>(type: "int", nullable: true),
-                    Grade = table.Column<float>(type: "real", nullable: false)
+                    Grade = table.Column<float>(type: "real", nullable: false, defaultValue: 0f)
                 },
                 constraints: table =>
                 {
@@ -170,6 +192,11 @@ namespace StudentCatalog.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Adeverinte_StudentId",
                 table: "Adeverinte",
+                column: "StudentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Alerte_StudentId",
+                table: "Alerte",
                 column: "StudentId");
 
             migrationBuilder.CreateIndex(
@@ -213,6 +240,9 @@ namespace StudentCatalog.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Adeverinte");
+
+            migrationBuilder.DropTable(
+                name: "Alerte");
 
             migrationBuilder.DropTable(
                 name: "CursuriStudenti");

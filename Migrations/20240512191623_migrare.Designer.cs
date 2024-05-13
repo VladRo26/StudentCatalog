@@ -12,8 +12,8 @@ using StudentCatalog.ContextModels;
 namespace StudentCatalog.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240511214514_PK48")]
-    partial class PK48
+    [Migration("20240512191623_migrare")]
+    partial class migrare
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,34 @@ namespace StudentCatalog.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("StudentCatalog.Models.AlertModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Alert")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("StudentId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("Alerte");
+                });
 
             modelBuilder.Entity("StudentCatalog.Models.CourseModel", b =>
                 {
@@ -233,6 +261,17 @@ namespace StudentCatalog.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Useri");
+                });
+
+            modelBuilder.Entity("StudentCatalog.Models.AlertModel", b =>
+                {
+                    b.HasOne("StudentCatalog.Models.StudentModel", "Student")
+                        .WithMany()
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Student");
                 });
 
             modelBuilder.Entity("StudentCatalog.Models.CourseModel", b =>

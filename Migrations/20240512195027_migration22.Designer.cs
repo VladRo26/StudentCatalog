@@ -12,8 +12,8 @@ using StudentCatalog.ContextModels;
 namespace StudentCatalog.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240512002739_jmek")]
-    partial class jmek
+    [Migration("20240512195027_migration22")]
+    partial class migration22
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,34 @@ namespace StudentCatalog.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("StudentCatalog.Models.AlertModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Alert")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("StudentId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("Alerte");
+                });
 
             modelBuilder.Entity("StudentCatalog.Models.CourseModel", b =>
                 {
@@ -76,16 +104,15 @@ namespace StudentCatalog.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Message")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ReceiverId")
+                    b.Property<int?>("ReceiverId")
                         .HasColumnType("int");
 
-                    b.Property<int>("SenderId")
+                    b.Property<int?>("SenderId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("TimeStamp")
+                    b.Property<DateTime?>("TimeStamp")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -235,6 +262,17 @@ namespace StudentCatalog.Migrations
                     b.ToTable("Useri");
                 });
 
+            modelBuilder.Entity("StudentCatalog.Models.AlertModel", b =>
+                {
+                    b.HasOne("StudentCatalog.Models.StudentModel", "Student")
+                        .WithMany()
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Student");
+                });
+
             modelBuilder.Entity("StudentCatalog.Models.CourseModel", b =>
                 {
                     b.HasOne("StudentCatalog.Models.UserModel", "Teacher")
@@ -248,13 +286,11 @@ namespace StudentCatalog.Migrations
                 {
                     b.HasOne("StudentCatalog.Models.UserModel", "Receiver")
                         .WithMany()
-                        .HasForeignKey("ReceiverId")
-                        .IsRequired();
+                        .HasForeignKey("ReceiverId");
 
                     b.HasOne("StudentCatalog.Models.UserModel", "Sender")
                         .WithMany()
-                        .HasForeignKey("SenderId")
-                        .IsRequired();
+                        .HasForeignKey("SenderId");
 
                     b.Navigation("Receiver");
 

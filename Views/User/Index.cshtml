@@ -1,8 +1,12 @@
-﻿@model List<UserModel>
+﻿@model List<StudentCatalog.Models.UserModel>
 @using StudentCatalog.Logic
-
 @{
     ViewData["Title"] = "Users";
+    var userStudentMapping = ViewBag.UserStudentMapping as Dictionary<int, int>;
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/User.css">
 }
 
 <h1>User Management</h1>
@@ -20,8 +24,11 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (UserModel user in Model)
+        @foreach (var user in Model)
         {
+            var studentId = userStudentMapping != null && userStudentMapping.ContainsKey(user.Id)
+            ? userStudentMapping[user.Id]
+            : (int?)null;
             <tr data-user-id="@user.Id">
                 <td>@user.FirstName</td>
                 <td>@user.LastName</td>
@@ -35,15 +42,15 @@
                 </td>
                 <td>
                     <button class="btn btn-primary btn-sm" onclick="saveChanges('@user.Id')">Save</button>
+                    @if (studentId.HasValue)
+                    {
+                        <button class="btn btn-warning btn-sm" onclick="modifyStudent('@studentId.Value')">Modify Student</button>
+                    }
                 </td>
             </tr>
         }
     </tbody>
 </table>
-
-<div>
-    <button id="addBtn" class="btn btn-success" onclick="location.href='@Url.Action("AddUser", "User")'">Add User</button>
-</div>
 
 @section Scripts {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -61,6 +68,7 @@
                     },
                     success: function (result) {
                         if (result.success) {
+                            location.reload();
                             alert('Role updated successfully!');
                         } else {
                             alert('Error: ' + result.message);
@@ -71,6 +79,10 @@
                         console.log(status, xhr.responseText);
                     }
                 });
+            };
+
+            window.modifyStudent = function (studentId) {
+                location.href = '/Student/ModifyStudent/' + studentId;
             };
         });
     </script>

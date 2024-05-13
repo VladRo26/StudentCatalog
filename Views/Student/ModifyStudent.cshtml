@@ -1,0 +1,40 @@
+﻿@model StudentCatalog.Models.StudentModel
+
+@{
+    ViewData["Title"] = "Modify Student";
+    List<SelectListItem> groups = ViewBag.Groups;
+}
+
+<h1>Modify Student</h1>
+
+<div class="container specific-container">
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="form-group">
+            <label asp-for="@Model.YearOfStudy" class="control-label">Year of Study</label>
+            <input asp-for="@Model.YearOfStudy" type="number" class="form-control" min="1" max="4" />
+            <span asp-validation-for="@Model.YearOfStudy" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="@Model.GroupId" class="control-label">Group</label>
+            <select asp-for="@Model.GroupId" asp-items="groups" class="form-control"></select>
+            <span asp-validation-for="@Model.GroupId" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="@Model.IsEnrolled" class="control-label">Enrolled</label>
+            <select asp-for="@Model.IsEnrolled" class="form-control">
+                <option value="true">True</option>
+                <option value="false">False</option>
+            </select>
+            <span asp-validation-for="@Model.IsEnrolled" class="text-danger"></span>
+        </div>
+
+        <input type="hidden" asp-for="@Model.Id" />
+        <input type="hidden" asp-for="@Model.UserId" />
+        <input type="hidden" asp-for="@Model.User" />
+         <input type="submit" value="Save" class="btn btn-primary" />
+    </form>
+</div>
