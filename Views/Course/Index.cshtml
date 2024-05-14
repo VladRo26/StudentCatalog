@@ -41,7 +41,7 @@
 
     <div>
         <button id="addBtn" class="btn btn-success" onclick="location.href='@Url.Action("AddCourse", "Course")'">Add Course</button>
-        <button id="modifyBtn" disabled="disabled" class="btn btn-primary">Modify</button>
+        <button id="modifyBtn" disabled="disabled" class="btn btn-secondary">Modify</button>
         <button id="deleteBtn" disabled="disabled" class="btn btn-danger">Delete</button>
         <button id="addStudentBtn" class="btn btn-info" disabled="disabled">Add Student</button>
 
@@ -74,6 +74,7 @@
                 $("#coursesTable tr").removeClass('table-primary'); // Remove highlight from all rows
                 $("#modifyBtn").attr("disabled", true);
                 $("#deleteBtn").attr("disabled", true);
+                $('#addStudentBtn').attr("disabled", true);
             });
 
             // Handle modify button click

@@ -6,6 +6,21 @@ html {
   html {
     font-size: 16px;
   }
+    textarea.form-control {
+        height: 120px; /* Slightly smaller height on smaller screens */
+    }
+
+    .course-card {
+        padding: 10px;
+    }
+
+    .course-actions {
+        margin-top: 10px;
+    }
+
+    .btn {
+        padding: 8px 16px;
+    }
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
@@ -97,24 +112,19 @@ button {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-input[type="submit"] {
+    input[type="submit"]:hover {
+        background-color: #8ff294;
+    }
+
+.btn-primary {
     background-color: #4CAF50;
     color: white;
 }
 
-    input[type="submit"]:hover {
-        background-color: #45A049;
-    }
-
-.btn-primary {
-    background-color: #258cfb;
-    color: white;
-}
 
     .btn-primary:hover {
-        background-color: #1e7de2;
+        background-color: #8ff294;
     }
-
 .btn-success {
     background-color: #4CAF50;
     color: white;
@@ -210,6 +220,57 @@ button[disabled] {
     color: #666666;
     cursor: not-allowed; /* Change cursor to not-allowed */
 }
+
+textarea.form-control {
+    width: 100%; /* Full-width */
+    height: 150px; /* Sufficient height for multi-line text */
+    padding: 10px; /* Comfortable padding for typing */
+    border: 1px solid #ccc; /* Consistent with other inputs */
+    border-radius: 4px; /* Rounded corners */
+    font-size: 16px; /* Readable text size */
+    line-height: 1.5; /* Optimal line spacing */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions for focus states */
+}
+
+    textarea.form-control:focus {
+        border-color: #258cfb; /* Highlight focus with a blue border */
+        box-shadow: 0 0 8px rgba(37, 140, 251, 0.2); /* Subtle shadow to enhance focus */
+    }
+
+    textarea.form-control::placeholder {
+        color: #888; /* Light grey color for placeholder text */
+        font-style: italic; /* Italicize placeholder text */
+    }
+
+.course-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    margin: 20px auto;
+    padding: 20px;
+    max-width: 600px;
+    text-align: left;
+}
+
+.course-header h1 {
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+.course-body p {
+    font-size: 16px;
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+
+.course-actions {
+    text-align: center;
+    margin-top: 20px;
+}
+
+
 
 
     

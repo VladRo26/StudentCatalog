@@ -1,21 +1,25 @@
-﻿@model CourseModel
+﻿@model StudentCatalog.Models.CourseModel
 
 @{
-    CourseModel course = Model;
-    ViewData["Title"] = course.Name;
-
+    ViewData["Title"] = Model.Name;
 }
 
-<h1>Name: @course.Name</h1>
-
-
-@if (course.Teacher == null)
-{
-    <h2>Teacher: No Teacher</h2>
-}
-else
-{
-    <h2>Teacher: @course.Teacher.LastName @course.Teacher.FirstName</h2>
-}
-
-<a asp-action="Index">Back to all courses</a>
+<div class="course-card">
+    <div class="course-header">
+        <h1>@Model.Name</h1>
+    </div>
+    <div class="course-body">
+        @if (Model.Teacher == null)
+        {
+            <p><strong>Teacher:</strong> No Teacher Assigned</p>
+        }
+        else
+        {
+            <p><strong>Teacher:</strong> @Model.Teacher.LastName, @Model.Teacher.FirstName</p>
+        }
+        <p><strong>Course Year:</strong> @Model.YearCourse</p>
+    </div>
+    <div class="course-actions">
+        <a asp-action="Index" class="btn btn-info">Back to All Courses</a>
+    </div>
+</div>
