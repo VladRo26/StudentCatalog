@@ -19,8 +19,9 @@
 
         <div class="form-group">
             <label asp-for="@Model.Grade" class="control-label">Initial Grade</label>
-            <input asp-for="@Model.Grade" class="form-control" type="number" min="0" step="0.01" />
+            <input asp-for="@Model.Grade" class="form-control" type="number" min="0" max="10" step="1" value="0" />
         </div>
+
         <button type="submit" class="btn btn-primary">Add Student</button>
         
     </form>
