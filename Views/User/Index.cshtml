@@ -37,7 +37,7 @@
                 <td>@user.Phone</td>
                 <td>
                     <select asp-for="@user.Role" class="form-control role-dropdown"
-                            asp-items="Html.GetEnumSelectList<UserType>()">
+                            asp-items="@EnumHelper.FilteredUserTypes()">
                     </select>
                 </td>
                 <td>

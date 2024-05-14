@@ -1,17 +1,29 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
     string userRole = User?.Claims.FirstOrDefault(claim => claim.Type == "Role")?.Value ?? "Nimic";
-  
-    
+
+
 }
 
 
 <div class="text-center">
 
-    
-    
-    
-        <h1 class="display-4">Welcome : @userRole </h1>
+
+    @{
+        if (User?.Identity?.IsAuthenticated == false)
+        {
+            <h1 class="display-4">You are not logged in, please make an accout or log into your account!</h1>
+
+        }
+        else if(userRole == "RolNeasignat"){
+            <h1 class="display-4">The moderator will assign you a role soon!</h1>
+        }
+        else 
+        {
+            <h1 class="display-4">Welcome : @userRole </h1>
+        }
+    }
+       
         <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
     
 </div>
