@@ -156,6 +156,61 @@ input[type="submit"] {
     margin-top: 10px;
 }
 
+/* General styles for form and buttons */
+.form-inline {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 20px;
+}
+
+.form-control {
+    margin-right: 10px; /* Spacing between form elements */
+    margin-bottom: 10px; /* Spacing for smaller screens */
+}
+
+
+
+/* Styling for the courses table */
+.table {
+    width: 100%;
+    margin-top: 20px; /* Spacing between form and table */
+    border-collapse: collapse; /* Ensures borders are neatly displayed */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern font */
+}
+
+    .table th,
+    .table td {
+        padding: 12px; /* Increased padding for a more spacious look */
+        text-align: left; /* Align text to the left */
+        border-bottom: 1px solid #ddd; /* Light gray border for each row */
+    }
+
+    .table th {
+        background-color: #f2f2f2; /* Light background for the header */
+        color: #333; /* Dark text color for contrast */
+        text-transform: uppercase; /* Uppercase header text for a modern look */
+        letter-spacing: 1px; /* Spacing between letters */
+    }
+
+    .table tr {
+        transition: background-color 0.3s ease; /* Smooth transition for hover effects */
+    }
+
+        .table tr:hover {
+            background-color: #f5f5f5; /* Light grey background on hover */
+        }
+
+/* Disable button styling */
+button:disabled,
+button[disabled] {
+    border: 1px solid #999999;
+    background-color: #cccccc;
+    color: #666666;
+    cursor: not-allowed; /* Change cursor to not-allowed */
+}
+
 
     
 
