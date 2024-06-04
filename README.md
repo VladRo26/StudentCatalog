@@ -16,5 +16,10 @@ This project is a web application made with MVC(Model-View-Controller),designed 
 ### Student:
 - View list of enrolled courses, grades, and yearly averages
 - Sort courses alphabetically or by grade
--
--
+- Request student certificates in PDF format if enrolled in a current study program.
+- Receive alerts for new course enrollments and grade postings
+
+### Teacher
+- Add grades for students enrolled in their courses.
+- Receive messages from the Secretary
+
