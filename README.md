@@ -23,14 +23,25 @@ This project is a web application made with MVC(Model-View-Controller),designed 
 - Add grades for students enrolled in their courses.
 - Receive messages from the Secretary
 
-### Secretary:
-- Access all course and group catalogs.
-- Export catalogs as PDF files
+### Other Functionalities
+- Search courses by name or professor.
+- Sign up
+-Attractive and responsive user interface.
 
-### Moderator
--Create, modify, or delete courses.
--Add students and professors to courses.
--Assign roles to users.(Only moderators can assign a role after sign up, you can not sign up as a teacher or as a student, you need to have your role assigned by the moderator)
+### Tables used:
+<img src="https://github.com/VladRo26/StudentCatalog/assets/100710098/4844e37e-1595-4734-8f06-7ff103204a09" width="900" height="600">
+
+## How it works:
+
+-When you entry on the website and you are not logeed in or you don t have an account you will see this page:
+
+<img src="https://github.com/VladRo26/StudentCatalog/assets/100710098/5ca68a6e-fb27-48ce-8669-30ced78e5afd" width="900" height="600">
+
+- If you will go to register you will have this page, with validation for fields like email and password:
+<img src="https://github.com/VladRo26/StudentCatalog/assets/100710098/4aee3519-4f9b-48cf-8b10-3ca52175fe32" width="900" height="600">
+
+- After you logged in, you will have access to specific functionalities based on your assigned role:
+<img src="https://github.com/VladRo26/StudentCatalog/assets/100710098/15147e9e-ed99-4664-b8e3-d915f7035f0f" width="900" height="600">
 
 
-a
+
