@@ -23,6 +23,15 @@ This project is a web application made with MVC(Model-View-Controller),designed 
 - Add grades for students enrolled in their courses.
 - Receive messages from the Secretary
 
+### Moderator:
+- Create, modify, or delete courses.
+- Add students and professors to courses.
+- Modify user roles
+
+### Secretary: 
+- Access all course and group catalogs.
+- Export catalogs as PDF files.
+- Can send messages to teachers.
 ### Other Functionalities
 - Search courses by name or professor.
 - Sign up
@@ -57,11 +66,14 @@ This project is a web application made with MVC(Model-View-Controller),designed 
 
 - **Select the course to enable the buttons**
 <img src="https://github.com/VladRo26/StudentCatalog/assets/100710098/30552805-1894-42f2-bff3-8041d57eb4e7" width="1000" height="500">
+
 - **Here there is no student avalabile to enroll in this course because of the year of study**
 <img src="https://github.com/VladRo26/StudentCatalog/assets/100710098/79328310-3619-45a7-80e0-83952eb896d5" width="1000" height="500">
+
 - **After I modified the student year I can assign it to the course**
 <img src="https://github.com/VladRo26/StudentCatalog/assets/100710098/8ad5485d-bfa6-4609-9082-757776d596f5" width="1000" height="500">
 
+### Teacher:
 
 
 
