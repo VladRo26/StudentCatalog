@@ -77,7 +77,15 @@ This project is a web application made with MVC(Model-View-Controller),designed 
 - The teacher interface will look like this:
 <img src="https://github.com/VladRo26/StudentCatalog/assets/100710098/f0f0a7c8-2c38-4e0f-a419-561c117251ea" width="1000" height="500">
 - Will see the courses that he teaches, he will have access to the catalogues to grade the students and will also see the inbox where are the messages from secretary.
+
+- **Here, the teacher can view the courses they teach.**
+<img src="https://github.com/VladRo26/StudentCatalog/assets/100710098/11a82dc2-ad02-44d7-85d1-5462404a5fd0" width="1000" height="500">
+
+
+- **Here, the teacher can access the catalogues to grade the students.**
 <img src="https://github.com/VladRo26/StudentCatalog/assets/100710098/684e00d1-af62-4661-a6c4-5ba0f2d60825" width="1000" height="500">
+<img src="https://github.com/VladRo26/StudentCatalog/assets/100710098/a1f7f4a5-1f69-4c0e-97cd-0305a573ed01" width="1000" height="500">
+
 
 
 
