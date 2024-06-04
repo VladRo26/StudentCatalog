@@ -47,8 +47,8 @@ This project is a web application made with MVC(Model-View-Controller),designed 
 
 ### Moderator:
 - Can assign and change roles of the users from the drop down list, and also for student can modify the student info, for example the year of study or the group
-<img src=https://github.com/VladRo26/StudentCatalog/assets/100710098/cc4aeeb8-601a-4d9f-9e54-55c8d8661712 width="900" height="400">
-<img src="https://github.com/VladRo26/StudentCatalog/assets/100710098/4b1b46bd-b9ef-4923-8a70-28cefb72d74d" width="900" height="400">
+<img src=https://github.com/VladRo26/StudentCatalog/assets/100710098/cc4aeeb8-601a-4d9f-9e54-55c8d8661712 width="1000" height="500">
+<img src="https://github.com/VladRo26/StudentCatalog/assets/100710098/4b1b46bd-b9ef-4923-8a70-28cefb72d74d" width="1000" height="500">
 
 
 
