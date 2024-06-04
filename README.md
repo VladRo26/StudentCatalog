@@ -86,6 +86,11 @@ This project is a web application made with MVC(Model-View-Controller),designed 
 <img src="https://github.com/VladRo26/StudentCatalog/assets/100710098/684e00d1-af62-4661-a6c4-5ba0f2d60825" width="1000" height="500">
 <img src="https://github.com/VladRo26/StudentCatalog/assets/100710098/a1f7f4a5-1f69-4c0e-97cd-0305a573ed01" width="1000" height="500">
 
+- **On this page, the teacher will se the all the messages from secretary, and will also have a details button to see more about the messaage**
+<img src="https://github.com/VladRo26/StudentCatalog/assets/100710098/4e2c876f-be00-418a-ab7c-32ed009a630a"  width="1000" height="500">
+<img src="https://github.com/VladRo26/StudentCatalog/assets/100710098/be1a7a38-038b-4f00-9692-3862c50e9d82" width="1000" height="500">
+
+
 
 
 
