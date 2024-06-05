@@ -120,6 +120,9 @@ This project is a web application made with MVC(Model-View-Controller),designed 
 
 <img src="https://github.com/VladRo26/StudentCatalog/assets/100710098/71155855-c840-4591-a22c-a25b82996b8a" width="1000" height="500">
 
+- **Then I selected the yearly average on the first year of study*
+
+<img src="https://github.com/VladRo26/StudentCatalog/assets/100710098/34aff721-4ae0-4b21-981f-4dd9dc99ec15" width="1000" height="500">
 
 
 
