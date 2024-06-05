@@ -90,7 +90,35 @@ This project is a web application made with MVC(Model-View-Controller),designed 
 <img src="https://github.com/VladRo26/StudentCatalog/assets/100710098/4e2c876f-be00-418a-ab7c-32ed009a630a"  width="1000" height="500">
 <img src="https://github.com/VladRo26/StudentCatalog/assets/100710098/be1a7a38-038b-4f00-9692-3862c50e9d82" width="1000" height="500">
 
+### Secretary:
+- The secretary will have access to all groups and corses catalog and they can export it to pdf and also can send messages to the teachers.
+<img src="https://github.com/VladRo26/StudentCatalog/assets/100710098/247628e9-6dd4-4369-982c-2889bf798ff3" width="1000" height="500">
 
+- **Here, I press on the option Catalog Online and i have acces to catalogues to all groups and courses and I exproted the catalog for the 361 group as pdf**
+
+<img src="https://github.com/VladRo26/StudentCatalog/assets/100710098/ed20fdc3-ec00-4113-9141-ecf59667de19" width="1000" height="500">
+
+<img src="https://github.com/VladRo26/StudentCatalog/assets/100710098/21362fd0-1431-49d7-b37d-5f9c0e533957" width="1000" height="500">
+
+- **The downlanded catalogue of 361 group**
+<img src="https://github.com/VladRo26/StudentCatalog/assets/100710098/7f0d82e8-02b0-4424-8a3a-2172202335d7" width="1000" height="500">
+
+- **Here is the send message to teacher functionality, where the secretary selects from dropdown list the teacher and writes the messags and then send it**
+
+<img src="https://github.com/VladRo26/StudentCatalog/assets/100710098/a2598f61-5245-4176-ae8a-dc5ae22721d3" width="1000" height="500">
+
+### Student:
+- The stundets can view and sort enrolled courses and grades, check yearly averages, request certificates if enrolled, and receive alerts for new enrollments and grade postings
+- **Here is the main page for the student**
+<img src="https://github.com/VladRo26/StudentCatalog/assets/100710098/0b63fb81-7d04-456a-a0c6-b51b35208e42" width="1000" height="500">
+
+- **Here is the page where the students sees the grade and sort it after courses names and after grades and also see the yearly average**
+
+<img src="https://github.com/VladRo26/StudentCatalog/assets/100710098/de268297-2eb3-4ca7-aeac-828058363d4b" width="1000" height="500">
+
+- **Here I applied the sorting on grades descendent**
+
+<img src="https://github.com/VladRo26/StudentCatalog/assets/100710098/71155855-c840-4591-a22c-a25b82996b8a" width="1000" height="500">
 
 
 
