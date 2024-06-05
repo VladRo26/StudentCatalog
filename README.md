@@ -131,13 +131,13 @@ This project is a web application made with MVC(Model-View-Controller),designed 
 </br>
 
 - **After I selected a reason I pressed on submit and then I have a pdf with my request**
-<img src="https://github.com/VladRo26/StudentCatalog/assets/100710098/e0dd9523-f73a-48ef-a3a1-bb066641c3fb" width="1200" height="1000">
+<img src="https://github.com/VladRo26/StudentCatalog/assets/100710098/e0dd9523-f73a-48ef-a3a1-bb066641c3fb">
 
-<img src="https://github.com/VladRo26/StudentCatalog/assets/100710098/cd72d28f-f38c-4851-b1af-4c4add434496" width="1000" height="500">
+<img src="https://github.com/VladRo26/StudentCatalog/assets/100710098/cd72d28f-f38c-4851-b1af-4c4add434496">
 
 - **I logged as a teacher and modify the grade from 9 to 5, and the student will be notified**
 
-<img src="https://github.com/VladRo26/StudentCatalog/assets/100710098/6bbcec50-772d-46eb-a04a-c353bccd69b5" width="1400" height="800">
+<img src="https://github.com/VladRo26/StudentCatalog/assets/100710098/6bbcec50-772d-46eb-a04a-c353bccd69b5">
 
 
 
