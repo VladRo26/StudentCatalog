@@ -124,6 +124,18 @@ This project is a web application made with MVC(Model-View-Controller),designed 
 
 <img src="https://github.com/VladRo26/StudentCatalog/assets/100710098/34aff721-4ae0-4b21-981f-4dd9dc99ec15" width="1000" height="500">
 
+- **Now I want to print a certificate and I need to complete the fields and to select a reason from the dropdown list**
+
+<img src="https://github.com/VladRo26/StudentCatalog/assets/100710098/d7aa4cc1-e326-497f-92b4-67cdb2f1d056" width="500" height="800">
+
+</br>
+
+- **After I selected a reason I pressed on submit and then I have a pdf with my request**
+<img src="https://github.com/VladRo26/StudentCatalog/assets/100710098/e0dd9523-f73a-48ef-a3a1-bb066641c3fb" width="1200" height="1000">
+
+<img src="https://github.com/VladRo26/StudentCatalog/assets/100710098/cd72d28f-f38c-4851-b1af-4c4add434496" width="1000" height="500">
+
+
 
 
 
